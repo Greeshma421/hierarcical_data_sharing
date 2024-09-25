@@ -1,98 +1,61 @@
-# Natural Language SQL Query Generator
+# Health Monitor 
 
-This application allows users to generate SQL queries using natural language input. It connects to a database (or uses a mock database) and provides an interface for users to ask questions in plain English, which are then converted into SQL queries and executed against the database.
+## Overview
+
+This is a comprehensive health monitoring application built with Next.js, React, and Tailwind CSS. It provides users with tools to track various aspects of their health, including real-time monitoring, activity tracking, nutrition logging, and health reporting.
 
 ## Features
 
-- Natural language to SQL query conversion
-- Database connection management
-- Mock database option for testing
-- Real-time query results display
+1. **Real-time Health Monitoring**
+   - View live data from Arduino sensors
+   - Monitor vital signs such as heart rate, body temperature, and SpO2
+2. **Activity Tracker**
+   - Log various types of physical activities
+   - Track duration and calories burned for each activity
+   - View recent activities and a chart of calories burned by activity type
 
-## Architecture
+3. **Nutrition Log**
+   - Search and log food items consumed
+   - Track daily calorie intake
+   - View nutritional information for logged foods
 
-- Frontend:
-  - Next.js for server-side rendering and API routes
-  - Tailwind CSS for styling
-  - Shadcn/UI for components
+4. **Health Reports**
+   - View comprehensive health metrics including weight, blood pressure, cholesterol, and blood sugar
+   - Visualize health data trends over time with interactive charts
+   - Generate full health reports
 
-- Backend:
-  - FastAPI for handling database connections and text-to-SQL conversion
-  - Python for backend logic
-  - OpenAI for text-to-SQL conversion
-  
+5. **Chat Interface**
+   - Communicate with AI-powered health assistant
+   - Get instant answers to health-related questions
 
-- Key Components:
-  - `QueryInput.tsx`: Main component managing state and user interactions
-  - `DatabaseConnection.tsx`: Handles database connection UI and logic
-  - `QueryForm.tsx`: Manages the query input form
-  - `QueryResults.tsx`: Displays the SQL query and results
-  - `db-structure/route.ts`: Next.js API route for fetching database structure
-  - `proxy/route.ts`: Next.js API route for communicating with FastAPI backend
-  - FastAPI backend: Handles database connections and text-to-SQL conversion
+6. **Data Visualization**
+   - Interactive charts and graphs for all health metrics
+   - Customizable views to focus on specific health aspects
 
-## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/CubeStar1/text-to-sql.git
-   cd text-to-sql
-   ```
 
-2. Install frontend dependencies:
-   ```bash
-   npm install
-   ```
+## Technology Stack
 
-3. Set up frontend environment variables:
-   Create a `.env.local` file in the root directory and add:
-   ```bash
-   API_URL=http://localhost:8000  # FastAPI backend URL
-   ```
+- Next.js
+- React
+- Tailwind CSS
+- shadcn/ui components
+- Recharts for data visualization
 
-4. Install backend dependencies:
-- Clone the backend repository:
-   ```bash
-   git clone https://github.com/CubeStar1/N2SQL-API.git
-   cd N2SQL-API
-   ```
+## Getting Started
 
-2. Install backend dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Run the development server with `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-5. Set up backend environment variables:
-   Create a `.env` file in the `N2SQL-API` directory and add necessary variables.
-   ```bash
-   OPENAI_API_KEY=<your-openai-api-key>
-   ```
+## Pages
 
-## Usage
-
-1. Start the FastAPI backend:
-   ```bash
-   cd N2SQL-API
-   uvicorn main:app --reload
-   ```
-
-2. In a new terminal, start the Next.js frontend:
-   ```bash
-   npm run dev
-   ```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-4. Choose to use a mock database or connect to your own database.
-
-5. If using your own database, enter the connection details.
-
-6. Click "Connect" to establish a database connection.
-
-7. Enter a natural language query in the text area.
-
-8. Click "Generate SQL" to convert your query to SQL and execute it.
-
-9. View the results displayed below the query input.
-
+- `/`: Home page with overview of health status
+- `/chat`: AI-powered health chat interface
+- `/health-monitor`: Real-time health data monitoring
+- `/health/activity`: Activity tracking and logging
+- `/health/nutrition`: Nutrition logging and calorie tracking
+- `/health/reports`: Comprehensive health reports and data visualization
+- `/health/visualization`: Detailed health data visualizations
 
