@@ -1,0 +1,83 @@
+.heroContainer {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #A7C7E7, #C3B1E1, #F7CAC9);
+  padding: 4rem 1rem;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #4A4E69;
+}
+
+.header p {
+  font-size: 1.25rem;
+  color: #4A4E69;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.featureCard {
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  color: #4A4E69;
+}
+
+.icon {
+  margin-right: 0.5rem;
+  color: #6B9080;
+}
+
+.buttonContainer {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.primaryButton {
+  background-color: #6B9080;
+  color: white;
+  margin-right: 1rem;
+}
+
+.primaryButton:hover {
+  background-color: #5A7A6B;
+}
+
+.secondaryButton {
+  border-color: #6B9080;
+  color: #6B9080;
+}
+
+.secondaryButton:hover {
+  background-color: #6B9080;
+  color: white;
+}
+
+.buttonIcon {
+  margin-left: 0.5rem;
+}
