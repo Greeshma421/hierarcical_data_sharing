@@ -60,7 +60,7 @@ export default function NutritionTracker() {
         throw new Error("User not authenticated");
       }
 
-      let dailyResponse = await fetch(`/api/nutrition/daily?user_id=${userId}&date=${today}`);
+      const dailyResponse = await fetch(`/api/nutrition/daily?user_id=${userId}&date=${today}`);
       let dailyData;
 
       if (dailyResponse.status === 404 || !dailyResponse.ok) {

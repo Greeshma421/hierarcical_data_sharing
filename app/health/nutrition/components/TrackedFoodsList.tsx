@@ -15,7 +15,7 @@ interface TrackedFoodsListProps {
 export function TrackedFoodsList({ foods, onDeleteFood }: TrackedFoodsListProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Today's Tracked Foods</h2>
+      <h2 className="text-lg font-semibold mb-4">Today&apos;s Consumed Foods</h2>
       {foods.map((food) => (
         <div key={food.id} className="flex items-center justify-between mb-4 p-2 hover:bg-gray-100 rounded-md">
           <div className="flex items-center">
