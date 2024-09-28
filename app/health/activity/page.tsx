@@ -126,7 +126,7 @@ export default function ActivityTracker() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <ChartTooltip
-                  content={<ChartTooltipContent indicator="bar" />}
+                  content={<ChartTooltipContent indicator="line" />}
                 />
                 <Bar dataKey="calories" fill={chartConfig.calories.color} />
               </BarChart>
