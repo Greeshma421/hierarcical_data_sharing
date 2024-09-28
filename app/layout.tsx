@@ -3,13 +3,14 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from "@/app/components/theme-provider"
 import { Header } from "@/app/components/Header"
+import QueryProvider from "@/components/query-provider";
 import { Toaster } from "@/app/components/Toaster"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NL to SQL Query',
-  description: 'Convert natural language to SQL queries',
+  title: 'Health Monitor',
+  description: 'Health Monitor',
 }
 
 export default function RootLayout({
@@ -20,6 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <QueryProvider>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -27,11 +30,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="mx-auto py-6 px-4 lg:px-4">
+          <main className="mx-auto py-2 px-1 md:px-4 py-6">
             {children}
           </main>
           <Toaster />
         </ThemeProvider>
+      </QueryProvider>
       </body>
     </html>
   )

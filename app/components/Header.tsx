@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 const components = [
@@ -23,6 +24,14 @@ const components = [
     title: "Chat",
     href: "/chat",
   },
+  {
+    title: "Profile",
+    href: "/profile",
+  },
+  {
+    title: "About",
+    href: "/about",
+  }
 ]
 
 const healthItems = [
@@ -51,6 +60,7 @@ const healthItems = [
     href: '/health/visualization',
     description: 'View your health data in a visual format',
   }
+  
 ]
 
 export function Header() {
@@ -59,6 +69,7 @@ export function Header() {
       <div className="flex h-16 items-center justify-between px-4 max-w-10xl mx-auto">
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
+            <Image src="/idea-lab-round.png" alt="Health Monitor" width={32} height={32} />
             <span className="text-xl font-bold hidden md:block">Health Monitor</span>
           </Link>
         </div>

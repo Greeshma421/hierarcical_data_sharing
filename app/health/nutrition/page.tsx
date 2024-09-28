@@ -1,102 +1,190 @@
 "use client"
 
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react"
+import { useToast } from "@/hooks/use-toast"
+import { FoodSearch } from "./components/FoodSearch"
+import { TrackedFoodsList } from "./components/TrackedFoodsList"
+import { CalorieProgress } from "./components/CalorieProgress"
+import { Food } from "./types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Progress } from "@/components/ui/progress"
-
-// Mock function to simulate API call for food data
-const fetchFoodData = async (query: string) => {
-  // In a real application, replace this with an actual API call
-  // For example, you could use the Edamam Food Database API or Nutritionix API
-  await new Promise(resolve => setTimeout(resolve, 500)) // Simulate API delay
-  return [
-    { name: "Apple", calories: 95, image: "https://example.com/apple.jpg" },
-    { name: "Banana", calories: 105, image: "https://example.com/banana.jpg" },
-    { name: "Chicken Breast", calories: 165, image: "https://example.com/chicken.jpg" },
-  ].filter(food => food.name.toLowerCase().includes(query.toLowerCase()))
-}
+import { Button } from "@/components/ui/button"
+import { ChevronRight, ChevronLeft } from 'lucide-react'
+import { ScrollArea } from "@/components/ui/scroll-area"
+import useUser from "@/app/hook/useUser"
+import { NutritionCharts } from "./components/NutritionCharts"
 
 export default function NutritionTracker() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<any[]>([])
-  const [trackedFoods, setTrackedFoods] = useState<any[]>([])
+  const [trackedFoods, setTrackedFoods] = useState<Food[]>([])
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const { toast } = useToast()
+  const {data:user, error} = useUser()
 
-  const handleSearch = async () => {
-    const results = await fetchFoodData(searchQuery)
-    setSearchResults(results)
+  useEffect(() => {
+    if (user) {
+      loadTrackedFoods();
+    }
+  }, [user]);
+
+  const loadTrackedFoods = async () => {
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const userId = user?.id;
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
+      const response = await fetch(`/api/nutrition/daily?user_id=${userId}&date=${today}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.consumed_foods) {
+          setTrackedFoods(data.consumed_foods);
+        }
+      } else if (response.status !== 404) {
+        // 404 means no data for today, which is fine. For other errors, we'll show a toast.
+        throw new Error("Failed to load tracked foods");
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load tracked foods. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const addFood = async (foodName: string) => {
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const userId = user?.id;
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
+      let dailyResponse = await fetch(`/api/nutrition/daily?user_id=${userId}&date=${today}`);
+      let dailyData;
+
+      if (dailyResponse.status === 404 || !dailyResponse.ok) {
+        const createResponse = await fetch('/api/nutrition/daily', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId, date: today, total_calories: 0 }),
+        });
+        if (!createResponse.ok) {
+          const errorData = await createResponse.json();
+          throw new Error(`Failed to create daily nutrition: ${errorData.error}`);
+        }
+        dailyData = await createResponse.json();
+      } else {
+        dailyData = await dailyResponse.json();
+      }
+
+
+      // Now add the consumed food
+      const response = await fetch('/api/nutrition', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: foodName, type: 'nutrients' }),
+      });
+      const data = await response.json();
+      if (data.foods && data.foods.length > 0) {
+        const food = data.foods[0];
+        const newFood: Food = {
+          id: '', // This will be set by the database
+          daily_nutrition_id: dailyData.id,
+          food_name: food.food_name,
+          calories: Math.round(food.nf_calories),
+          protein: food.nf_protein,
+          carbs: food.nf_total_carbohydrate,
+          fat: food.nf_total_fat,
+          image_url: food.photo.highres,
+          consumed_at: new Date().toISOString(), // Set the current time
+        };
+        const consumedResponse = await fetch('/api/nutrition/consumed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newFood),
+        });
+        const consumedData: Food[] = await consumedResponse.json();
+        console.log(consumedData)
+        setTrackedFoods(prevFoods => [...prevFoods, consumedData[0]]); // Note the [0] here
+        toast({
+          title: 'Food Added',
+          description: `${food.food_name} has been added to your tracked foods.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'An error occurred while adding the food.',
+        variant: 'destructive',
+      });
+    }
   }
 
-  const addFood = (food: any) => {
-    setTrackedFoods([...trackedFoods, food])
-  }
+  const deleteFood = async (foodId: string) => {
+    try {
+      const response = await fetch(`/api/nutrition/consumed/${foodId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to delete food: ${errorData.error}`);
+      }
+
+      setTrackedFoods(prevFoods => prevFoods.filter(food => food.id !== foodId));
+      toast({
+        title: 'Food Deleted',
+        description: 'The food has been removed from your tracked foods.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to delete food. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const totalCalories = trackedFoods.reduce((sum, food) => sum + food.calories, 0)
   const calorieGoal = 2000 // Example goal
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Nutrition Tracker</h1>
-      
-      <div className="flex gap-4 mb-8">
-        <Input
-          type="text"
-          placeholder="Search for a food..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-grow"
-        />
-        <Button onClick={handleSearch}>Search</Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
+    <div className="flex h-[calc(100vh-120px)] overflow-hidden gap-4">
+      {/* Sidebar */}
+      <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 overflow-hidden`}>
+        <Card className="h-full flex flex-col">
           <CardHeader>
-            <CardTitle>Search Results</CardTitle>
+            <CardTitle>Nutrition Tracker</CardTitle>
           </CardHeader>
-          <CardContent>
-            {searchResults.map((food, index) => (
-              <div key={index} className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <Avatar className="h-10 w-10 mr-4">
-                    <AvatarImage src={food.image} alt={food.name} />
-                    <AvatarFallback>{food.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium">{food.name}</p>
-                    <p className="text-sm text-gray-500">{food.calories} calories</p>
-                  </div>
-                </div>
-                <Button variant="outline" onClick={() => addFood(food)}>Add</Button>
-              </div>
-            ))}
+          <CardContent className="flex-grow overflow-hidden flex flex-col">
+            <div className="mb-4">
+              <FoodSearch onAddFood={addFood} />
+            </div>
+            <ScrollArea className="flex-grow">
+              <TrackedFoodsList foods={trackedFoods} onDeleteFood={deleteFood} />
+            </ScrollArea>
           </CardContent>
         </Card>
+      </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Today's Tracked Foods</CardTitle>
+      {/* Main content */}
+      <div className="flex-grow overflow-hidden">
+        <Card className="h-full flex flex-col">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Nutrition Analytics</CardTitle>
+            <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              {isSidebarOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            </Button>
           </CardHeader>
-          <CardContent>
-            {trackedFoods.map((food, index) => (
-              <div key={index} className="flex items-center mb-4">
-                <Avatar className="h-10 w-10 mr-4">
-                  <AvatarImage src={food.image} alt={food.name} />
-                  <AvatarFallback>{food.name[0]}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-medium">{food.name}</p>
-                  <p className="text-sm text-gray-500">{food.calories} calories</p>
-                </div>
-              </div>
-            ))}
-            <div className="mt-6">
-              <p className="font-medium mb-2">Total Calories: {totalCalories} / {calorieGoal}</p>
-              <Progress value={(totalCalories / calorieGoal) * 100} className="w-full" />
+          <ScrollArea className="flex-grow">
+          <CardContent className="">
+            <div className="mb-6">
+              <CalorieProgress totalCalories={totalCalories} calorieGoal={calorieGoal} />
             </div>
+            <NutritionCharts foods={trackedFoods} />
           </CardContent>
+          </ScrollArea>
         </Card>
       </div>
     </div>

@@ -34,8 +34,18 @@ export function HealthChart({ data, dataKey, title, unit, chartType }: HealthCha
     },
   } satisfies ChartConfig
 
-  const ChartComponent = chartType === 'area' ? AreaChart : LineChart;
-  const DataComponent = chartType === 'area' ? Area : Line;
+  const commonChartProps = {
+    data: data,
+    margin: { top: 10, right: 30, left: 0, bottom: 0 },
+    height: 300,
+  };
+
+  const commonDataComponentProps = {
+    type: "monotone" as const,
+    dataKey: dataKey,
+    stroke: chartConfig[dataKey].color,
+    fillOpacity: 0.3,
+  };
 
   return (
     <Card>
@@ -45,28 +55,39 @@ export function HealthChart({ data, dataKey, title, unit, chartType }: HealthCha
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <ChartComponent
-            data={data}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            height={300}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="timestamp"
-              tickFormatter={(value) => new Date(value).toLocaleTimeString()}
-            />
-            <YAxis />
-            <ChartTooltip
-              content={<ChartTooltipContent indicator="dot" />}
-            />
-            <DataComponent
-              type="monotone"
-              dataKey={dataKey}
-              stroke={chartConfig[dataKey].color}
-              fill={chartType === 'area' ? chartConfig[dataKey].color : 'none'}
-              fillOpacity={0.3}
-            />
-          </ChartComponent>
+          {chartType === 'area' ? (
+            <AreaChart {...commonChartProps}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="timestamp"
+                tickFormatter={(value) => new Date(value).toLocaleTimeString()}
+              />
+              <YAxis />
+              <ChartTooltip
+                content={<ChartTooltipContent indicator="dot" />}
+              />
+              <Area
+                {...commonDataComponentProps}
+                fill={chartConfig[dataKey].color}
+              />
+            </AreaChart>
+          ) : (
+            <LineChart {...commonChartProps}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="timestamp"
+                tickFormatter={(value) => new Date(value).toLocaleTimeString()}
+              />
+              <YAxis />
+              <ChartTooltip
+                content={<ChartTooltipContent indicator="dot" />}
+              />
+              <Line
+                {...commonDataComponentProps}
+                fill="none"
+              />
+            </LineChart>
+          )}
         </ChartContainer>
       </CardContent>
     </Card>

@@ -37,7 +37,7 @@ export function ChatInterface({
             </Button>
           )}
         </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">
+        <CardContent className="flex-grow overflow-hidden p-2 md:p-4">
           <div className="flex flex-col h-full">
             <MessageList messages={messages} />
             <form onSubmit={handleSubmit} className="flex space-x-2">
