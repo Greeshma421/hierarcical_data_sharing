@@ -7,28 +7,29 @@ export async function POST(request: Request) {
 
   switch (action) {
     case 'fetchConversations':
-      return await fetchConversations(supabase)
+      return await fetchConversations(supabase, data.userId)
     case 'fetchMessages':
-      return await fetchMessages(supabase, data.conversationId)
+      return await fetchMessages(supabase, data.conversationId, data.userId)
     case 'createConversation':
-      return await createConversation(supabase, data.title, data.user_id)
+      return await createConversation(supabase, data.title, data.userId)
     case 'insertMessage':
-      return await insertMessage(supabase, data.message, data.conversationId)
+      return await insertMessage(supabase, data.message, data.conversationId, data.userId)
     case 'updateConversationTimestamp':
-      return await updateConversationTimestamp(supabase, data.conversationId)
+      return await updateConversationTimestamp(supabase, data.conversationId, data.userId)
     case 'renameConversation':
-      return await renameConversation(supabase, data.conversationId, data.title)
+      return await renameConversation(supabase, data.conversationId, data.title, data.userId)
     case 'deleteConversation':
-      return await deleteConversation(supabase, data.conversationId)
+      return await deleteConversation(supabase, data.conversationId, data.userId)
     default:
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
   }
 }
 
-async function fetchConversations(supabase: any) {
+async function fetchConversations(supabase: any, userId: string) {
   const { data, error } = await supabase
     .from('conversations')
     .select('*')
+    .eq('user_id', userId)
     .order('updated_at', { ascending: false })
 
   if (error) {
@@ -37,7 +38,21 @@ async function fetchConversations(supabase: any) {
   return NextResponse.json(data)
 }
 
-async function fetchMessages(supabase: any, conversationId: string) {
+async function fetchMessages(supabase: any, conversationId: string, userId: string) {
+  // First, check if the conversation belongs to the user
+  const { data: conversationData, error: conversationError } = await supabase
+    .from('conversations')
+    .select('id')
+    .eq('id', conversationId)
+    .eq('user_id', userId)
+    .single()
+
+  if (conversationError || !conversationData) {
+    console.log('conversationError', conversationError)
+    console.log('conversationData', conversationData)
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+  }
+
   const { data, error } = await supabase
     .from('messages')
     .select('*')
@@ -50,10 +65,10 @@ async function fetchMessages(supabase: any, conversationId: string) {
   return NextResponse.json(data)
 }
 
-async function createConversation(supabase: any, title: string, user_id: string) {
+async function createConversation(supabase: any, title: string, userId: string) {
   const { data, error } = await supabase
     .from('conversations')
-    .insert({ title, user_id })
+    .insert({ title, user_id: userId })
     .select()
 
   if (error) {
@@ -62,7 +77,21 @@ async function createConversation(supabase: any, title: string, user_id: string)
   return NextResponse.json(data[0])
 }
 
-async function insertMessage(supabase: any, message: any, conversationId: string) {
+async function insertMessage(supabase: any, message: any, conversationId: string, userId: string) {
+  // First, check if the conversation belongs to the user
+  const { data: conversationData, error: conversationError } = await supabase
+    .from('conversations')
+    .select('id')
+    .eq('id', conversationId)
+    .eq('user_id', userId)
+    .single()
+
+  if (conversationError || !conversationData) {
+    console.log('conversationError', conversationError)
+    console.log('conversationData', conversationData)
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+  }
+
   const { error } = await supabase.from('messages').insert({
     conversation_id: conversationId,
     role: message.role,
@@ -75,11 +104,12 @@ async function insertMessage(supabase: any, message: any, conversationId: string
   return NextResponse.json({ success: true })
 }
 
-async function updateConversationTimestamp(supabase: any, conversationId: string) {
+async function updateConversationTimestamp(supabase: any, conversationId: string, userId: string) {
   const { error } = await supabase
     .from('conversations')
     .update({ updated_at: new Date().toISOString() })
     .eq('id', conversationId)
+    .eq('user_id', userId)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
@@ -87,25 +117,29 @@ async function updateConversationTimestamp(supabase: any, conversationId: string
   return NextResponse.json({ success: true })
 }
 
-async function renameConversation(supabase: any, conversationId: string, title: string) {
+async function renameConversation(supabase: any, conversationId: string, title: string, userId: string) {
   const { error } = await supabase
     .from('conversations')
     .update({ title, updated_at: new Date().toISOString() })
     .eq('id', conversationId)
+    .eq('user_id', userId)
 
   if (error) {
+    console.log('error', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
   return NextResponse.json({ success: true })
 }
 
-async function deleteConversation(supabase: any, conversationId: string) {
+async function deleteConversation(supabase: any, conversationId: string, userId: string) {
   const { error } = await supabase
     .from('conversations')
     .delete()
     .eq('id', conversationId)
+    .eq('user_id', userId)
 
   if (error) {
+    console.log('error', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
   return NextResponse.json({ success: true })

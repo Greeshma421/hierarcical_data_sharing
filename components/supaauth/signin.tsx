@@ -43,13 +43,13 @@ export default function SignIn() {
 			<div className="p-5 space-y-5">
 				<div className="text-center space-y-3">
 					<Image
-						src={"/supabase.png"}
+						src={"/idea-lab-round.png"}
 						alt="supabase logo"
 						width={50}
 						height={50}
 						className=" rounded-full mx-auto"
 					/>
-					<h1 className="font-bold">Sign in to SupaAuth</h1>
+					<h1 className="font-bold">Sign in to Health Monitor</h1>
 					<p className="text-sm">
 						Welcome back! Please sign in to continue
 					</p>
@@ -91,6 +91,7 @@ export function SignInForm({ redirectTo }: { redirectTo: string }) {
 					toast.error(error.message);
 				} else {
 					router.push(redirectTo);
+					router.refresh();
 				}
 			});
 		}

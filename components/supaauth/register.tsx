@@ -18,13 +18,13 @@ export default function Register() {
 		<div className="w-full sm:w-[26rem] shadow sm:p-5  border dark:border-zinc-800 rounded-md">
 			<div className="p-5 space-y-5">
 				<div className="text-center space-y-3">
-					{/* <Image
-						src={"/supabase.png"}
+					<Image
+						src={"/idea-lab-round.png"}
 						alt="supabase logo"
 						width={50}
 						height={50}
 						className=" rounded-full mx-auto"
-					/> */}
+					/>
 					<h1 className="font-bold">Create Account</h1>
 					<p className="text-sm">
 						Welcome! Please fill in the details to get started.

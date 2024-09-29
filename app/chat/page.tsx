@@ -17,17 +17,18 @@ import { Message, Conversation } from './types'
 import { createSupabaseBrowser } from '@/lib/supabase/client'
 import { User } from './types'
 import useUser from '../hook/useUser'
+import { useRouter } from 'next/navigation'
 
 const DB_CREDENTIALS = {
-  db_user: process.env.NEXT_PUBLIC_DB_USER,
-  db_password: process.env.NEXT_PUBLIC_DB_PASSWORD,
-  db_host: process.env.NEXT_PUBLIC_DB_HOST,
-  db_port: process.env.NEXT_PUBLIC_DB_PORT,
-  db_name: process.env.NEXT_PUBLIC_DB_NAME
+  db_user: "",
+  db_password: "",
+  db_host: "",
+  db_port: "",
+  db_name: ""
 };
-console.log(DB_CREDENTIALS);
 
 export default function ChatPage() {
+  const router = useRouter()
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -43,10 +44,11 @@ export default function ChatPage() {
   const { data: user, error } = useUser()
 
   useEffect(() => {
-    fetchConversations();
-    handleConnect();
-  }, []);
-
+    if (user) {
+      fetchConversations();
+      handleConnect();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (currentConversationId) {
@@ -55,10 +57,12 @@ export default function ChatPage() {
   }, [currentConversationId]);
 
   const fetchConversations = async () => {
+    if (!user) return;
+
     const response = await fetch('/api/chat-operations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'fetchConversations' }),
+      body: JSON.stringify({ action: 'fetchConversations', data: { userId: user.id } }),
     });
     
     if (!response.ok) {
@@ -74,10 +78,11 @@ export default function ChatPage() {
   };
 
   const fetchMessages = async (conversationId: string) => {
+    if (!user) return;
     const response = await fetch('/api/chat-operations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'fetchMessages', data: { conversationId } }),
+      body: JSON.stringify({ action: 'fetchMessages', data: { conversationId, userId: user.id } }),
     });
     
     if (!response.ok) {
@@ -135,7 +140,7 @@ export default function ChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           action: 'insertMessage', 
-          data: { message: userMessage, conversationId: currentConversationId } 
+          data: { message: userMessage, conversationId: currentConversationId, userId: user?.id } 
         }),
       });
 
@@ -167,7 +172,7 @@ export default function ChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           action: 'insertMessage', 
-          data: { message: assistantMessage, conversationId: currentConversationId } 
+          data: { message: assistantMessage, conversationId: currentConversationId, userId: user?.id } 
         }),
       });
 
@@ -214,10 +219,12 @@ export default function ChatPage() {
   };
 
   const handleNewConversation = async () => {
+    if (!user) return;
+
     const response = await fetch('/api/chat-operations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'createConversation', data: { title: 'New Conversation', user_id: user?.id } }),
+      body: JSON.stringify({ action: 'createConversation', data: { title: 'New Conversation', userId: user.id } }),
     });
     
     if (!response.ok) {
@@ -239,7 +246,7 @@ export default function ChatPage() {
     const response = await fetch('/api/chat-operations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'renameConversation', data: { conversationId, title } }),
+      body: JSON.stringify({ action: 'renameConversation', data: { conversationId, title, userId: user?.id } }),
     });
 
     if (!response.ok) {
@@ -254,7 +261,7 @@ export default function ChatPage() {
     const response = await fetch('/api/chat-operations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'deleteConversation', data: { conversationId } }),
+      body: JSON.stringify({ action: 'deleteConversation', data: { conversationId, userId: user?.id } }),
     });
 
     if (!response.ok) {
