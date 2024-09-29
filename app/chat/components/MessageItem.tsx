@@ -12,7 +12,7 @@ export function MessageItem({ message }: MessageItemProps) {
   return (
     <div className="mb-4">
       <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-        <div className={`max-w-[90%] p-3 rounded-lg sm:max-w-[50%] md:max-w-[50%] lg:max-w-[50%] ${
+        <div className={`max-w-[100%] p-3 rounded-lg sm:max-w-[75%] md:max-w-[75%] lg:max-w-[50%] ${
           message.role === 'user' ? 'bg-blue-100 text-blue-900' : 'bg-gray-100 text-gray-900'
         }`}>
           {message.role === 'assistant' ? (
@@ -38,7 +38,7 @@ export function MessageItem({ message }: MessageItemProps) {
                       Show Results
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-[90vw] max-h-[90vh] overflow-auto">
+                  <DialogContent className="max-w-[80vw] max-h-[80vh] overflow-auto p-4 gap-0">
                     <DialogHeader>
                       <DialogTitle>Query Results</DialogTitle>
                     </DialogHeader>

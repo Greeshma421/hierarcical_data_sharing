@@ -31,7 +31,7 @@ export function Sidebar({
   onDeleteConversation
 }: SidebarProps) {
   return (
-    <ScrollArea className={`${isSidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 ease-in-out overflow-y-auto flex-shrink-0`}>
+    <ScrollArea className={`${isSidebarOpen ? 'w-80 sm:w-80' : 'w-0'} transition-all duration-300 ease-in-out overflow-y-auto flex-shrink-0`}>
       <Card className="">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Configure Chat</CardTitle>

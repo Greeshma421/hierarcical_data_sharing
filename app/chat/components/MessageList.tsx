@@ -16,7 +16,7 @@ export function MessageList({ messages }: MessageListProps) {
   useEffect(scrollToBottom, [messages]);
 
   return (
-    <div className="flex-grow mb-4 overflow-y-auto scrollbar-hide">
+    <div className="flex-grow overflow-y-auto scrollbar-hide">
       {messages.map((m, index) => (
         <MessageItem key={index} message={m} />
       ))}

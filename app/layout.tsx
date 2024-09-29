@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from "@/app/components/theme-provider"
-import { Header } from "@/app/components/Header"
+import { Header } from './components/Header'
 import QueryProvider from "@/components/query-provider";
 import { Toaster } from "@/app/components/Toaster"
 
@@ -30,7 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="mx-auto py-2 px-1 md:px-4 py-6">
+          <main className="mx-auto py-2 px-1 md:px-4 md:py-6">
             {children}
           </main>
           <Toaster />

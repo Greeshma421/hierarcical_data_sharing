@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { NavigationMobile } from "./NavigationMobile"
 
 const components = [
   {
@@ -60,7 +61,6 @@ const healthItems = [
     href: '/health/visualization',
     description: 'View your health data in a visual format',
   }
-  
 ]
 
 export function Header() {
@@ -70,39 +70,44 @@ export function Header() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/idea-lab-round.png" alt="Health Monitor" width={32} height={32} />
-            <span className="text-xl font-bold hidden md:block">Health Monitor</span>
+            <span className="text-xl font-bold">Health Monitor</span>
           </Link>
         </div>
-        <NavigationMenu>
-          <NavigationMenuList>
-            {components.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                <Link href={item.href} legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {item.title}
-                  </NavigationMenuLink>
-                </Link>
+        <div className="hidden md:block">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {components.map((item) => (
+                <NavigationMenuItem key={item.title}>
+                  <Link href={item.href} legacyBehavior passHref>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      {item.title}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Health</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {healthItems.map((item) => (
+                      <ListItem
+                        key={item.title}
+                        title={item.title}
+                        href={item.href}
+                      >
+                        {item.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
               </NavigationMenuItem>
-            ))}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Health</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {healthItems.map((item) => (
-                    <ListItem
-                      key={item.title}
-                      title={item.title}
-                      href={item.href}
-                    >
-                      {item.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <nav className="flex items-center">
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        <nav className="flex items-center space-x-4">
+          <div className="md:hidden">
+            <NavigationMobile components={components} healthItems={healthItems} />
+          </div>
           <ModeToggle />
         </nav>
       </div>

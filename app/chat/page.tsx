@@ -276,8 +276,15 @@ export default function ChatPage() {
     }
   };
 
+  const samplePrompts = [
+    "How many calories did I eat yesterday?",
+    "How many steps did I walk today?",
+    "What was my heart rate yesterday?",
+    "What was my weight yesterday?",
+  ];
+
   return (
-    <div className="flex h-[calc(100vh-120px)] overflow-hidden gap-4">
+    <div className="flex h-[calc(100vh-80px)] overflow-hidden gap-0 mx-auto sm:gap-2 md:h-[calc(100vh-120px)]">
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
@@ -300,6 +307,7 @@ export default function ChatPage() {
         handleSubmit={handleSubmit}
         isConnected={isConnected}
         isLoading={isLoading}
+        samplePrompts={samplePrompts}  // Add this line
       />
     </div>
   )
