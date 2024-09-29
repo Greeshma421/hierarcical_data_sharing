@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChevronRight, Activity, Database, LineChart, Bell, FileText, MessageSquare, Utensils, Brain, Code, Server } from 'lucide-react'
 import Link from 'next/link'
 import { useRef } from 'react'
-import { Spotlight } from '@/components/ui/spotlight'
 import Image from 'next/image'
 
 const features = [
