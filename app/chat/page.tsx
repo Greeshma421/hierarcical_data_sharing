@@ -1,23 +1,11 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { useToast } from '@/hooks/use-toast'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import ReactMarkdown from 'react-markdown'
-import { LLMSelector } from '../components/LLMSelector';
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Sidebar } from './components/Sidebar'
 import { ChatInterface } from './components/ChatInterface'
 import { Message, Conversation } from './types'
-import { createSupabaseBrowser } from '@/lib/supabase/client'
-import { User } from './types'
 import useUser from '../hook/useUser'
-import { useRouter } from 'next/navigation'
 
 const DB_CREDENTIALS = {
   db_user: "",
@@ -28,7 +16,6 @@ const DB_CREDENTIALS = {
 };
 
 export default function ChatPage() {
-  const router = useRouter()
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -40,7 +27,6 @@ export default function ChatPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
-  const supabase = createSupabaseBrowser()
   const { data: user, error } = useUser()
 
   useEffect(() => {
@@ -214,7 +200,7 @@ export default function ChatPage() {
   useEffect(scrollToBottom, [messages]);
 
   const handleLlmChange = (value: string) => {
-    console.log("LLM changed to:", value); // Add this line for debugging
+    console.log("LLM changed to:", value); 
     setLlmChoice(value);
   };
 
@@ -307,7 +293,7 @@ export default function ChatPage() {
         handleSubmit={handleSubmit}
         isConnected={isConnected}
         isLoading={isLoading}
-        samplePrompts={samplePrompts}  // Add this line
+        samplePrompts={samplePrompts}  
       />
     </div>
   )

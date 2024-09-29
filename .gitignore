@@ -36,3 +36,14 @@ yarn-error.log*
 next-env.d.ts
 .env
 app.py
+app/chat-stream/page.tsx
+app/api/chat-stream/route.ts
+hooks/useManualServerSentEvents.ts
+components/ui/wobble-card.tsx
+components/ui/vortex.tsx
+components/ui/spotlight.tsx
+components/ui/hover-border-gradient.tsx
+components/ui/container-scroll-animation.tsx
+components/blocks/features-section-demo-3.tsx
+components/blocks/features-section-demo-2.tsx
+components/blocks/features-section-demo-1.tsx

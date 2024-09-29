@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChevronRight, Activity, Database, LineChart, Bell, FileText, MessageSquare, Utensils, Brain, Code, Server } from 'lucide-react'
 import Link from 'next/link'
 import { useRef } from 'react'
+import { Spotlight } from '@/components/ui/spotlight'
+import Image from 'next/image'
 
 const features = [
   {
@@ -103,29 +105,66 @@ export default function HeroPage() {
   return (
     <div className="container mx-auto px-4 py-16" ref={containerRef}>
       <motion.div
-        className="text-center mb-12"
+        className="flex flex-col gap-16 mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-5xl font-bold mb-4">Your Complete Health Hub</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Empowering you with real-time health tracking, personalized insights, and comprehensive wellness management.
-        </p>
-        <div className="flex flex-col md:flex-row justify-center mt-4 gap-4">
-        <Link href="/health-monitor">
-          <Button size="lg" className="mr-4 w-full md:w-auto">
-            View Dashboard <ChevronRight className="ml-2" />
-          </Button>
-        </Link>
-        <Link href="/chat">
-          <Button size="lg" variant="outline" className="w-full md:w-auto">
-            Try Health Chatbot <ChevronRight className="ml-2" />
-          </Button>
-        </Link>
+        {/* First image and text */}
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-full md:w-1/2 text-center sm:text-left">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Complete Health Hub</h1>
+            <p className="text-lg md:text-xl text-gray-600 mb-6">
+              Empowering you with real-time health tracking, personalized insights, and comprehensive wellness management.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/health-monitor">
+                <Button size="lg" className="w-full sm:w-auto">
+                  View Dashboard <ChevronRight className="ml-2" />
+                </Button>
+              </Link>
+              {/* <Link href="/chat">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                  Try Health Chatbot <ChevronRight className="ml-2" />
+                </Button>
+              </Link> */}
+            </div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <img
+              src="/health-monitor-graphs.jpg"
+              alt="Health Dashboard"
+              width={600}
+              height={400}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+
+        {/* Second image and text */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+          <div className="w-full md:w-1/2 text-center md:text-right">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">AI-Powered Health Insights</h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-6">
+              Our LLM powered health assistant can answer your health related questions by querying your health data using natural language.
+            </p>
+            <Link href="/chat">
+              <Button size="lg" className="w-full sm:w-auto">
+              Try Health Assistant <ChevronRight className="ml-2" />
+              </Button>
+            </Link>
+          </div>
+          <div className="w-full md:w-1/2">
+            <img
+              src="/health-monitor-chat.jpg"
+              alt="AI Health Insights"
+              width={600}
+              height={400}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
         </div>
       </motion.div>
-      
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
@@ -254,8 +293,6 @@ export default function HeroPage() {
           </CardContent>
         </Card>
       </motion.div>
-
-      
     </div>
   )
 }
