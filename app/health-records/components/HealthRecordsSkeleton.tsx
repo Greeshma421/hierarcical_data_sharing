@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function HealthRecordsSkeleton() {
   return (
-    <div className="flex h-screen">
+    <>
       <div className="w-80 border-r p-4">
         <Card className="h-full">
           <CardHeader>
@@ -29,12 +29,13 @@ export function HealthRecordsSkeleton() {
                 <Skeleton className="h-5 w-3/4" />
               </CardHeader>
               <CardContent>
+                <Skeleton className="h-32 w-full mb-2" />
                 <Skeleton className="h-10 w-full" />
               </CardContent>
             </Card>
           ))}
         </div>
       </main>
-    </div>
+    </>
   );
 }

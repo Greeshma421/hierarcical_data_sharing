@@ -7,6 +7,8 @@ import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ReactMarkdown from 'react-markdown';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -36,7 +38,7 @@ export function ChatButton() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/rag-query', {
+      const response = await fetch(`${API_URL}/rag-query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
