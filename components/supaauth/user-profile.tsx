@@ -30,7 +30,7 @@ export default function UserProfile() {
 	};
 
 	return (
-		<div className="w-full">
+		<div className="">
 			<Popover>
 				<PopoverTrigger>
 					<Avatar />

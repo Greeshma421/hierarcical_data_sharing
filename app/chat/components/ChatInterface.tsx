@@ -7,6 +7,7 @@ import { ChevronRight } from 'lucide-react'
 import { MessageList } from './MessageList'
 import { Message } from "../types"
 import { Loader2 } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface ChatInterfaceProps {
   isSidebarOpen: boolean;
@@ -18,6 +19,8 @@ interface ChatInterfaceProps {
   isConnected: boolean;
   isLoading: boolean;
   samplePrompts: string[];
+  useRAG: boolean;
+  setUseRAG: (useRAG: boolean) => void;
 }
 
 export function ChatInterface({
@@ -30,6 +33,8 @@ export function ChatInterface({
   isConnected,
   isLoading,
   samplePrompts,
+  useRAG,
+  setUseRAG,
 }: ChatInterfaceProps) {
   return (
     <div className="flex-grow overflow-hidden">
@@ -63,17 +68,29 @@ export function ChatInterface({
             ) : (
               <MessageList messages={messages} />
             )}
-            <form onSubmit={handleSubmit} className="flex space-x-2 mt-1">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about your data..."
-                className="flex-grow"
-                disabled={!isConnected || isLoading}
-              />
-              <Button type="submit" disabled={!isConnected || isLoading}>
-                {isLoading ? <Loader2 className="animate-spin" /> : 'Send'}
-              </Button>
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-2 mt-1">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="useRAG"
+                  checked={useRAG}
+                  onCheckedChange={(checked) => setUseRAG(checked as boolean)}
+                />
+                <label htmlFor="useRAG" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  Chat with medical records
+                </label>
+              </div>
+              <div className="flex space-x-2">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask about your data..."
+                  className="flex-grow"
+                  disabled={!isConnected || isLoading}
+                />
+                <Button type="submit" disabled={!isConnected || isLoading}>
+                  {isLoading ? <Loader2 className="animate-spin" /> : 'Send'}
+                </Button>
+              </div>
             </form>
           </div>
         </CardContent>

@@ -23,6 +23,10 @@ const menuItems = [
     title: "Profile",
     href: "/profile",
   },
+  {
+    title: "Health Records",
+    href: "/health-records",
+  },
 ]
 
 export function Navigation() {

@@ -28,6 +28,7 @@ export default function ChatPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const { data: user, error } = useUser()
+  const [useRAG, setUseRAG] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -130,14 +131,17 @@ export default function ChatPage() {
         }),
       });
 
-      const response = await fetch('/api/chat', {
+      const endpoint = useRAG ? '/api/rag-query' : '/api/chat';
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           messages: [...messages, userMessage], 
           dbCredentials: DB_CREDENTIALS, 
           llm_choice: llmChoice,
-          conversationId: currentConversationId
+          conversationId: currentConversationId,
+          query: input, // for RAG query
+          match_count: 5 // for RAG query
         }),
       });
 
@@ -148,7 +152,7 @@ export default function ChatPage() {
       const data = await response.json();
       const assistantMessage: Message = { 
         role: 'assistant', 
-        content: data.content,
+        content: useRAG ? data.response : data.content,
         tabular_data: data.tabular_data 
       };
 
@@ -293,7 +297,9 @@ export default function ChatPage() {
         handleSubmit={handleSubmit}
         isConnected={isConnected}
         isLoading={isLoading}
-        samplePrompts={samplePrompts}  
+        samplePrompts={samplePrompts}
+        useRAG={useRAG}
+        setUseRAG={setUseRAG}
       />
     </div>
   )

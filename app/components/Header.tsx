@@ -26,8 +26,8 @@ const components = [
     href: "/chat",
   },
   {
-    title: "Profile",
-    href: "/profile",
+    title: "Dashboard",
+    href: "/dashboard",
   },
   {
     title: "About",
@@ -41,31 +41,23 @@ const healthItems = [
     href: "/health-monitor",
     description: "View your real-time health data",
   },
-  {
-    title: "Activity Tracker",
-    href: "/health/activity",
-    description: "Track your daily activities and exercises",
-  },
+
   {
     title: "Nutrition Log",
     href: "/health/nutrition",
     description: "Log and analyze your daily nutrition",
   },
   {
-    title: "Health Reports",
-    href: "/health/reports",
-    description: "View your comprehensive health reports",
+    title: "Health Records",
+    href: "/health-records",
+    description: "View your comprehensive health records",
   },
-  {
-    title: 'Data Visualization',
-    href: '/health/visualization',
-    description: 'View your health data in a visual format',
-  }
+
 ]
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
+    <header className="supports-backdrop-blur:bg-background/90 sticky top-0 z-40 w-full bg-background/40 backdrop-blur-lg border-b border-border">
       <div className="flex h-16 items-center justify-between px-4 max-w-7xl mx-auto">
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">

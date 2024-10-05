@@ -6,6 +6,10 @@ const nextConfig = {
                 hostname: 'nix-tag-images.s3.amazonaws.com',
                 protocol: 'https',
             },
+            {
+                hostname: 'wkgtxptenzjenicqfbpg.supabase.co',
+                protocol: 'https',
+            },
         ],
     },
 };

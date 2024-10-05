@@ -36,7 +36,6 @@ yarn-error.log*
 next-env.d.ts
 .env
 app.py
-app/chat-stream/page.tsx
 app/api/chat-stream/route.ts
 hooks/useManualServerSentEvents.ts
 components/ui/wobble-card.tsx
