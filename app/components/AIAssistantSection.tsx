@@ -93,7 +93,7 @@ export function AIAssistantSection() {
                     <Bot className="w-8 h-8 mt-1" />
                     <div className="bg-muted p-4 rounded-lg max-w-[75%]">
                       <p className="font-medium mb-2">Analysis of Morning Heart Rate</p>
-                      <p className="mb-4">I've analyzed your heart rate data for the mornings of last week. Here's a summary:</p>
+                      <p className="mb-4">I&apos;ve analyzed your heart rate data for the mornings of last week. Here&apos;s a summary:</p>
                       <Card className="mb-4">
                         <CardHeader>
                           <CardTitle className="text-sm">SQL Query</CardTitle>
