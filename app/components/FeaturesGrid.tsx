@@ -3,7 +3,7 @@
 import { Activity, Database, LineChart, Bell, FileText, MessageSquare } from 'lucide-react'
 import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
 import { BorderBeam } from '@/components/ui/border-beam'
-
+import Image from 'next/image'
 
 const features = [
   {
@@ -12,7 +12,8 @@ const features = [
     icon: Activity,
     href: "/features/real-time-data",
     cta: "Learn more",
-    className: "md:col-span-2"
+    className: "md:col-span-2",
+    imageSrc: "/llm_flow.webp"
   },
   {
     name: "Data Storage & Analysis",
@@ -20,7 +21,8 @@ const features = [
     icon: Database,
     href: "/features/data-analysis",
     cta: "See analytics",
-    className: "md:col-span-1"
+    className: "md:col-span-1",
+    imageSrc: "/supabase_vecor.svg"
   },
   {
     name: "Comprehensive Reports",
@@ -28,7 +30,8 @@ const features = [
     icon: FileText,
     href: "/features/reports",
     cta: "View sample report",
-    className: "md:col-span-1"
+    className: "md:col-span-1",
+    imageSrc: "/chat-demo.webp"
   },
   {
     name: "Health Chatbot",
@@ -36,7 +39,8 @@ const features = [
     icon: MessageSquare,
     href: "/features/chatbot",
     cta: "Try chatbot",
-    className: "md:col-span-1"
+    className: "md:col-span-1",
+    imageSrc: "/chat-demo.webp"
   },
   {
     name: "Customizable Alerts",
@@ -44,7 +48,8 @@ const features = [
     icon: Bell,
     href: "/features/alerts",
     cta: "Set up alerts",
-    className: "md:col-span-1"
+    className: "md:col-span-1",
+    imageSrc: "/chat-demo.webp"
   }
 ]
 
@@ -60,7 +65,17 @@ export default function FeaturesGrid() {
           href={feature.href}
           cta={feature.cta}
           className={feature.className}
-          background={<div className="absolute inset-0 bg-gradient-to-br from-neutral-100 to-neutral-50 dark:from-neutral-900 dark:to-neutral-800" />}
+          background={
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src={feature.imageSrc}
+                alt={feature.name}
+                layout="fill"
+                objectFit="cover"
+                className="opacity-80 dark:opacity-80"
+              />
+            </div>
+          }
         />
       ))}
     </BentoGrid>

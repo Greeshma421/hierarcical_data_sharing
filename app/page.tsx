@@ -13,6 +13,9 @@ import { cn } from "@/lib/utils"
 import GridPattern from '@/components/ui/grid-pattern'
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { AIAssistantSection } from '@/app/components/AIAssistantSection';
+import { AnimatedBeamMultipleOutputDemo } from '@/app/components/AnimatedBeamDemo'
+import Spline from '@splinetool/react-spline/next';
+import RAGChatSection from '@/app/components/RAGChatSection';  // Add this import
 
 export default function HeroPage() {
   const containerRef = useRef(null)
@@ -25,8 +28,11 @@ export default function HeroPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
+
         <HeroSection />
         <AIInsightsSection />
+        <RAGChatSection />
+
       </motion.div>
 
       <div className="space-y-18">
