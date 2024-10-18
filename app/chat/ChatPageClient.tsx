@@ -10,11 +10,11 @@ import { User } from '@supabase/supabase-js'
 import { createSupabaseBrowser } from "@/lib/supabase/client";
 
 const DB_CREDENTIALS = {
-  db_user: process.env.NEXT_PUBLIC_DB_USER,
-  db_password: process.env.NEXT_PUBLIC_DB_PASSWORD,
-  db_host: process.env.NEXT_PUBLIC_DB_HOST,
-  db_port: process.env.NEXT_PUBLIC_DB_PORT,
-  db_name: process.env.NEXT_PUBLIC_DB_NAME
+  db_user: "",
+  db_password: "",
+  db_host: "",
+  db_port: "",
+  db_name: ""
 };
 
 interface ChatPageClientProps {
