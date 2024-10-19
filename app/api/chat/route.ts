@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const API_URL = process.env.API_URL || 'http://localhost:8000';
 const DB_CREDENTIALS = {
-  db_user: process.env.NEXT_PUBLIC_DB_USER,
-  db_password: process.env.NEXT_PUBLIC_DB_PASSWORD,
-  db_host: process.env.NEXT_PUBLIC_DB_HOST,
-  db_port: process.env.NEXT_PUBLIC_DB_PORT,
-  db_name: process.env.NEXT_PUBLIC_DB_NAME
+  db_user: process.env.DB_USER,
+  db_password: process.env.DB_PASSWORD,
+  db_host: process.env.DB_HOST,
+  db_port: process.env.DB_PORT,
+  db_name: process.env.DB_NAME,
 };
 
 export async function POST(req: NextRequest) {

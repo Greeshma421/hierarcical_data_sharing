@@ -34,7 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="mx-auto py-2 px-1 md:px-4 md:py-6">
+          <main className="mx-auto py-0 px-1 md:px-4 md:py-6">
             {children}
           </main>
           <Script id="clarity-script" strategy="afterInteractive">

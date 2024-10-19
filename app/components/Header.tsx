@@ -38,7 +38,7 @@ const components = [
 const healthItems = [
   {
     title: "Health Monitor",
-    href: "/health-monitor",
+    href: "/health/monitor",
     description: "View your real-time health data",
   },
 
@@ -49,8 +49,13 @@ const healthItems = [
   },
   {
     title: "Health Records",
-    href: "/health-records",
+    href: "/health/records",
     description: "View your comprehensive health records",
+  },
+  {
+    title: "Activities",
+    href: "/health/activities",
+    description: "View your Strava activities",
   },
 
 ]

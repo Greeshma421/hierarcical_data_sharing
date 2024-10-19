@@ -46,7 +46,7 @@ export function Sidebar({
           <ChevronRight className="h-4 w-4" />
         </Button>
       )}
-      <ScrollArea className={`${isSidebarOpen ? 'w-80 sm:w-80' : 'w-0'} transition-all duration-300 ease-in-out overflow-y-auto flex-shrink-0`}>
+      <ScrollArea className={`${isSidebarOpen ? 'w-full sm:w-80' : 'w-0'} transition-all duration-300 ease-in-out overflow-y-auto flex-shrink-0`}>
         <Card className="h-full">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Configure Chat</CardTitle>
