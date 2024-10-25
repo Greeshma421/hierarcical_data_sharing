@@ -15,13 +15,13 @@ const EmpathyMap = () => {
           <h2 className="text-2xl font-bold mb-4">Says</h2>
           <div className="flex flex-wrap">
             <div className={`${stickyNoteStyle} bg-amber-200`}>
-              "I need all my medical documents in one place"
+              &quot;I need all my medical documents in one place&quot;
             </div>
             <div className={`${stickyNoteStyle} bg-amber-100`}>
-              "Which portal has my latest scan results?"
+              &quot;Which portal has my latest scan results?&quot;
             </div>
             <div className={`${stickyNoteStyle} bg-amber-200`}>
-              "I wish I could just search through all my reports at once"
+              &quot;I wish I could just search through all my reports at once&quot;
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@ const EmpathyMap = () => {
           <h2 className="text-2xl font-bold mb-4">Feels</h2>
           <div className="flex flex-wrap">
             <div className={`${stickyNoteStyle} bg-blue-100`}>
-              Frustrated when can't find specific test results
+              Frustrated when can&apos;t find specific test results
             </div>
             <div className={`${stickyNoteStyle} bg-blue-200`}>
               Anxious about keeping track of everything
