@@ -6,6 +6,10 @@ This project is a  health data management and AI-assisted analysis platform. It 
 
 ## Features
 
+### Real time sensor data integration
+- Integration of Arduino sensors for real-time data collection
+- Display of sensor data on the dashboard using ESP8266 syncing data to Supabase
+
 ### Health Records Management
 - Secure upload and storage of personal health records
 - File preview and download functionality
@@ -32,17 +36,8 @@ This project is a  health data management and AI-assisted analysis platform. It 
 - Displays search results with source attribution and relevance ranking
 - Generates comprehensive reports based on search results using OpenAI's GPT-4o
 
-### Real-time Data Analysis
-- Connects to external databases for real-time health data analysis
-- Supports SQL query generation for complex data inquiries
-- Visualizes query results for easy interpretation
 
-### Medical Records Processing
-- Automatic transcription of uploaded medical records (PDF and images)
-- Creation of embeddings from transcribed text using Cohere
-- Storage of embeddings in Supabase's vector database for efficient retrieval
-
-## Technical Stack
+## Techn Stack
 
 - Frontend: Next.js with TypeScript
 - Backend: FastAPI (Python)

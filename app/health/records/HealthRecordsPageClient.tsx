@@ -77,7 +77,7 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
 
     const { data, error } = await supabase.storage
       .from('health-records')
-      .createSignedUrl(`${initialData.user.id}/${fileName}`, 3600); // URL valid for 1 hour
+      .createSignedUrl(`${initialData.user.id}/${fileName}`, 3600); 
 
     if (error) {
       toast({
@@ -95,7 +95,6 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
     const file = files.find(f => f.id === fileId);
     if (!file || !initialData.user?.id) return;
 
-    // Keep the original file extension
     const fileExtension = file.name.split('.').pop();
     const newDisplayName = `${newName}.${fileExtension}`;
 
@@ -130,7 +129,6 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
   const handleDelete = async (fileId: string, fileName: string) => {
     if (!initialData.user?.id) return;
 
-    // Delete from storage
     const { error: storageError } = await supabase.storage
       .from('health-records')
       .remove([`${initialData.user.id}/${fileName}`]);
@@ -144,7 +142,6 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
       return;
     }
 
-    // Delete metadata
     const { error: metadataError } = await supabase
       .from('file_metadata')
       .delete()
@@ -159,7 +156,6 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
       return;
     }
 
-    // Update local state
     setFiles(files.filter(f => f.id !== fileId));
 
     toast({

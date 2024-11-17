@@ -40,7 +40,6 @@ export default function NutritionTracker() {
           setTrackedFoods(data.consumed_foods);
         }
       } else if (response.status !== 404) {
-        // 404 means no data for today, which is fine. For other errors, we'll show a toast.
         throw new Error("Failed to load tracked foods");
       }
     } catch (error) {
@@ -79,7 +78,6 @@ export default function NutritionTracker() {
       }
 
 
-      // Now add the consumed food
       const response = await fetch('/api/nutrition', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -89,7 +87,7 @@ export default function NutritionTracker() {
       if (data.foods && data.foods.length > 0) {
         const food = data.foods[0];
         const newFood: Food = {
-          id: '', // This will be set by the database
+          id: '', 
           daily_nutrition_id: dailyData.id,
           food_name: food.food_name,
           calories: Math.round(food.nf_calories),
@@ -97,7 +95,7 @@ export default function NutritionTracker() {
           carbs: food.nf_total_carbohydrate,
           fat: food.nf_total_fat,
           image_url: food.photo.highres,
-          consumed_at: new Date().toISOString(), // Set the current time
+          consumed_at: new Date().toISOString(),
         };
         const consumedResponse = await fetch('/api/nutrition/consumed', {
           method: 'POST',
@@ -106,7 +104,7 @@ export default function NutritionTracker() {
         });
         const consumedData: Food[] = await consumedResponse.json();
         console.log(consumedData)
-        setTrackedFoods(prevFoods => [...prevFoods, consumedData[0]]); // Note the [0] here
+        setTrackedFoods(prevFoods => [...prevFoods, consumedData[0]]); 
         toast({
           title: 'Food Added',
           description: `${food.food_name} has been added to your tracked foods.`,
@@ -147,11 +145,10 @@ export default function NutritionTracker() {
   };
 
   const totalCalories = trackedFoods.reduce((sum, food) => sum + food.calories, 0)
-  const calorieGoal = 2000 // Example goal
+  const calorieGoal = 2000 
 
   return (
     <div className="flex h-[calc(100vh-120px)] overflow-hidden gap-4">
-      {/* Sidebar */}
       <div className={`${isSidebarOpen ? 'w-96' : 'w-0'} transition-all duration-300 overflow-hidden`}>
         <Card className="h-full flex flex-col">
           <CardHeader>
@@ -168,7 +165,6 @@ export default function NutritionTracker() {
         </Card>
       </div>
 
-      {/* Main content */}
       <div className="flex-grow overflow-hidden">
         <Card className="h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between">

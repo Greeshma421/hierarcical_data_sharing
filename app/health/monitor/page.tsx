@@ -28,7 +28,7 @@ export default function HealthMonitor() {
   const startStreaming = () => {
     if (!isStreaming) {
       setIsStreaming(true);
-      fetchData(); // Fetch initial data
+      fetchData(); 
       intervalRef.current = setInterval(fetchData, 500);
     }
   };
@@ -46,7 +46,7 @@ export default function HealthMonitor() {
     const newData = await fetchHealthData();
     setHealthData(prevData => {
       const updatedData = [...prevData, { ...newData, timestamp: new Date().toISOString() }];
-      return updatedData.slice(-100); // Keep only the last 100 data points
+      return updatedData.slice(-100); 
     });
   };
 
@@ -70,7 +70,6 @@ export default function HealthMonitor() {
         setChartType={setChartType}
       />
 
-      {/* Main content */}
       <div className="flex-grow overflow-hidden">
         <Card className="h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between">

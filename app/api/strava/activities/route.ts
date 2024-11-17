@@ -19,7 +19,6 @@ export async function GET() {
     return NextResponse.json({ error: 'Strava not connected' }, { status: 400 })
   }
 
-  // Check if token is expired and refresh if necessary
   if (tokenData.expires_at < Math.floor(Date.now() / 1000)) {
     const refreshedToken = await refreshStravaToken(tokenData.refresh_token)
     if (!refreshedToken) {
@@ -49,7 +48,6 @@ export async function GET() {
     const activities = await activitiesResponse.json()
     console.log(activities)
 
-    // Store activities in the database
     const { error: insertError } = await supabase.from('strava_activities').upsert(
       activities.map((activity: any) => ({
         id: activity.id,

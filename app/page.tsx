@@ -15,8 +15,7 @@ import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { AIAssistantSection } from '@/app/components/AIAssistantSection';
 import { AnimatedBeamMultipleOutputDemo } from '@/app/components/AnimatedBeamDemo'
 import Spline from '@splinetool/react-spline/next';
-import RAGChatSection from '@/app/components/RAGChatSection';  // Add this import
-
+import RAGChatSection from '@/app/components/RAGChatSection';  
 export default function HeroPage() {
   const containerRef = useRef(null)
 

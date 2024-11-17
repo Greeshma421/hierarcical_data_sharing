@@ -43,7 +43,7 @@ export function ChatButton() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           query: input,
-          llm_choice: 'openai', // You can make this configurable
+          llm_choice: 'openai', 
           match_count: 5
         }),
       });

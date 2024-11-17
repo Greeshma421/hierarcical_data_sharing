@@ -6,7 +6,6 @@ interface StravaConnectProps {
 
 export default function StravaConnect({ onConnect }: StravaConnectProps) {
   const handleConnect = async () => {
-    // Redirect to Strava OAuth page
     window.location.href = '/api/strava/auth'
   }
 

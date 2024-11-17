@@ -20,7 +20,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  // Update total calories in daily_nutrition
   const { error: updateError } = await supabase.rpc('update_daily_calories', {
     p_daily_nutrition_id: daily_nutrition_id,
     p_calories: calories

@@ -23,5 +23,4 @@ export interface DetailedActivity extends Activity {
     average_speed: number;
     pace_zone: number;
   }[];
-  // Add other detailed fields as needed
 }

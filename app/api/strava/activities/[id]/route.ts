@@ -19,7 +19,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Strava not connected' }, { status: 400 })
   }
 
-  // Check if token is expired and refresh if necessary
   if (tokenData.expires_at < Math.floor(Date.now() / 1000)) {
     const refreshedToken = await refreshStravaToken(tokenData.refresh_token)
     if (!refreshedToken) {
@@ -47,9 +46,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
     }
 
     const activity = await activityResponse.json()
-
-    // Store detailed activity in the database if needed
-    // This step is optional and depends on your caching strategy
 
     return NextResponse.json(activity)
   } catch (error) {

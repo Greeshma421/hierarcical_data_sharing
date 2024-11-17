@@ -57,7 +57,6 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
     const displayName = fileName || selectedFile.name;
 
     try {
-      // Upload to Supabase storage
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('health-records')
         .upload(`${user.id}/${uniqueFileName}`, selectedFile);
@@ -68,7 +67,6 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
       }
       console.log('Uploaded to Supabase:', uploadData);
 
-      // Insert metadata
       const { data: metadataData, error: metadataError } = await supabase
         .from('file_metadata')
         .insert({ 
@@ -81,7 +79,6 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
 
       if (metadataError) throw metadataError;
 
-      // Notify successful upload
       onUploadSuccess(uniqueFileName, displayName);
       toast({
         title: "Success",
@@ -89,7 +86,6 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
         variant: "default",
       });
 
-      // Start transcription process in the background
       transcribeFile(metadataData.id, uniqueFileName, selectedFile);
 
     } catch (error) {

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json(data[0]);  // Return the first (and only) item in the array
+  return NextResponse.json(data[0]);  
 }
 
 export async function GET(request: Request) {

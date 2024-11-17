@@ -39,7 +39,6 @@ async function fetchConversations(supabase: any, userId: string) {
 }
 
 async function fetchMessages(supabase: any, conversationId: string, userId: string) {
-  // First, check if the conversation belongs to the user
   const { data: conversationData, error: conversationError } = await supabase
     .from('conversations')
     .select('id')
@@ -78,7 +77,6 @@ async function createConversation(supabase: any, title: string, userId: string) 
 }
 
 async function insertMessage(supabase: any, message: any, conversationId: string, userId: string) {
-  // First, check if the conversation belongs to the user
   const { data: conversationData, error: conversationError } = await supabase
     .from('conversations')
     .select('id')

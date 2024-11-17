@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts"
 
-// Mock data for the health report
 const mockHealthData = {
   weight: [
     { timestamp: '2023-01-01', value: 70 },
