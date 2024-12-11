@@ -57,6 +57,11 @@ const healthItems = [
     href: "/health/activities",
     description: "View your Strava activities",
   },
+  {
+    title: "Health Reports",
+    href: "/health/reports",
+    description: "View your health reports",
+  },
 
 ]
 

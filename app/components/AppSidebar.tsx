@@ -82,6 +82,11 @@ const healthItems = [
     title: "Activities",
     href: "/activities",
     icon: Footprints,
+  },
+  {
+    title: "Health Reports",
+    href: "/health/reports",
+    icon: FileText,
   }
 ]
 
