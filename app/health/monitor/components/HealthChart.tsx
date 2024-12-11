@@ -34,6 +34,40 @@ export function HealthChart({ data, dataKey, title, unit, chartType }: HealthCha
     },
   } satisfies ChartConfig
 
+  const formatXAxis = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  const formatTooltipDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString([], {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-background border rounded-lg p-2 shadow-sm">
+          <p className="text-sm font-medium">{formatTooltipDate(label)}</p>
+          <p className="text-sm text-muted-foreground">
+            {`${title}: ${payload[0].value.toFixed(2)}${unit}`}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const commonChartProps = {
     data: data,
     margin: { top: 10, right: 30, left: 0, bottom: 0 },
@@ -57,14 +91,16 @@ export function HealthChart({ data, dataKey, title, unit, chartType }: HealthCha
         <ChartContainer config={chartConfig}>
           {chartType === 'area' ? (
             <AreaChart {...commonChartProps}>
-              <CartesianGrid vertical={false} />
+              <CartesianGrid vertical={false} strokeDasharray="3 3" />
               <XAxis
-                dataKey="timestamp"
-                tickFormatter={(value) => new Date(value).toLocaleTimeString()}
+                dataKey="created_at"
+                tickFormatter={formatXAxis}
+                interval="preserveStartEnd"
+                minTickGap={50}
               />
               <YAxis />
               <ChartTooltip
-                content={<ChartTooltipContent indicator="dot" />}
+                content={<CustomTooltip />}
               />
               <Area
                 {...commonDataComponentProps}
@@ -73,14 +109,16 @@ export function HealthChart({ data, dataKey, title, unit, chartType }: HealthCha
             </AreaChart>
           ) : (
             <LineChart {...commonChartProps}>
-              <CartesianGrid vertical={false} />
+              <CartesianGrid vertical={false} strokeDasharray="3 3" />
               <XAxis
-                dataKey="timestamp"
-                tickFormatter={(value) => new Date(value).toLocaleTimeString()}
+                dataKey="created_at"
+                tickFormatter={formatXAxis}
+                interval="preserveStartEnd"
+                minTickGap={50}
               />
               <YAxis />
               <ChartTooltip
-                content={<ChartTooltipContent indicator="dot" />}
+                content={<CustomTooltip />}
               />
               <Line
                 {...commonDataComponentProps}

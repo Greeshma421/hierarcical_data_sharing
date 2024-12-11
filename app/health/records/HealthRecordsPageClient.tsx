@@ -35,8 +35,13 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
   const { toast } = useToast();
   const supabase = createSupabaseBrowser();
 
-  const handleUploadSuccess = (fileName: string, displayName: string) => {
-    setFiles(prevFiles => [...prevFiles, { id: fileName, name: fileName, displayName, created_at: new Date().toISOString() }]);
+  const handleUploadSuccess = (fileName: string, displayName: string, fileId: string) => {
+    setFiles(prevFiles => [...prevFiles, { 
+      id: fileId, 
+      name: fileName, 
+      displayName, 
+      created_at: new Date().toISOString() 
+    }]);
     toast({
       title: "Success",
       description: "File uploaded successfully",
@@ -129,40 +134,58 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
   const handleDelete = async (fileId: string, fileName: string) => {
     if (!initialData.user?.id) return;
 
-    const { error: storageError } = await supabase.storage
-      .from('health-records')
-      .remove([`${initialData.user.id}/${fileName}`]);
+    try {
+      // Delete from file_metadata first - this will cascade to other tables
+      const { error: metadataError } = await supabase
+        .from('file_metadata')
+        .delete()
+        .match({ 
+          user_id: initialData.user.id, 
+          file_name: fileName
+        });
 
-    if (storageError) {
+      if (metadataError) {
+        console.error('Metadata deletion error:', metadataError);
+        toast({
+          title: "Error",
+          description: "Failed to delete file metadata",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Then delete from storage
+      const { error: storageError } = await supabase.storage
+        .from('health-records')
+        .remove([`${initialData.user.id}/${fileName}`]);
+
+      if (storageError) {
+        console.error('Storage deletion error:', storageError);
+        toast({
+          title: "Error",
+          description: "Failed to delete file from storage",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Update UI
+      setFiles(files.filter(f => f.id !== fileId));
+
+      toast({
+        title: "Success",
+        description: "File deleted successfully",
+        variant: "default",
+      });
+
+    } catch (error) {
+      console.error('Delete operation failed:', error);
       toast({
         title: "Error",
-        description: "Failed to delete file from storage",
+        description: "Failed to delete file completely",
         variant: "destructive",
       });
-      return;
     }
-
-    const { error: metadataError } = await supabase
-      .from('file_metadata')
-      .delete()
-      .match({ user_id: initialData.user.id, file_name: fileName });
-
-    if (metadataError) {
-      toast({
-        title: "Error",
-        description: "Failed to delete file metadata",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setFiles(files.filter(f => f.id !== fileId));
-
-    toast({
-      title: "Success",
-      description: "File deleted successfully",
-      variant: "default",
-    });
   };
 
   if (!initialData.user) return null;
@@ -236,7 +259,8 @@ export default function HealthRecordsPageClient({ initialData }: HealthRecordsPa
               </CardHeader>
               <CardContent className="flex justify-between sm:flex-col gap-2">
                 <FilePreview 
-                  fileName={file.displayName} 
+                  fileName={file.displayName}
+                  fileId={file.id}
                   getFileUrl={() => getFileUrl(file.name)} 
                 />
                 <Button onClick={() => handleDownload(file.name)} size="sm">

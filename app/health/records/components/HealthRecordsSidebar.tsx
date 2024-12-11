@@ -8,9 +8,11 @@ import { User } from '@supabase/supabase-js';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from '@/hooks/use-toast';
 
+const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL;
+
 interface HealthRecordsSidebarProps {
   user: User;
-  onUploadSuccess: (fileName: string, displayName: string) => void;
+  onUploadSuccess: (fileName: string, displayName: string, fileId: string) => void;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (isOpen: boolean) => void;
 }
@@ -79,7 +81,8 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
 
       if (metadataError) throw metadataError;
 
-      onUploadSuccess(uniqueFileName, displayName);
+      onUploadSuccess(uniqueFileName, displayName, metadataData.id);
+      
       toast({
         title: "Success",
         description: "File uploaded successfully",
@@ -107,23 +110,45 @@ export function HealthRecordsSidebar({ user, onUploadSuccess, isSidebarOpen, set
 
   const transcribeFile = async (fileId: string, uniqueFileName: string, file: File) => {
     try {
-      const fileContent = await file.arrayBuffer();
-      const uint8Array = new Uint8Array(fileContent);
-      const base64File = btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      let requestBody;
+      
+      if (file.type === 'application/pdf') {
+        // For PDFs, get the signed URL from Supabase storage
+        const { data, error } = await supabase
+          .storage
+          .from('health-records')
+          .createSignedUrl(`${user.id}/${uniqueFileName}`, 600);
 
-      const endpoint = file.type === 'application/pdf' ? 'analyze-pdf' : 'analyze-image';
+        if (error) throw error;
+        if (!data?.signedUrl) throw new Error('Failed to generate signed URL');
 
-      const analysisResponse = await fetch(`http://localhost:8002/${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+        requestBody = {
+          file_url: data.signedUrl,
+          file_id: fileId,
+          user_id: user.id
+        };
+      } else {
+        // For images, convert to base64 as before
+        const fileContent = await file.arrayBuffer();
+        const uint8Array = new Uint8Array(fileContent);
+        const base64File = btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
+        requestBody = {
           file: base64File,
           file_name: uniqueFileName,
           file_id: fileId,
           user_id: user.id
-        }),
+        };
+      }
+
+      const endpoint = file.type === 'application/pdf' ? 'analyze-pdf' : 'analyze-image';
+
+      const analysisResponse = await fetch(`${imageUrl}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
       });
 
       if (!analysisResponse.ok) {

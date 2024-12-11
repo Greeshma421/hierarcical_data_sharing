@@ -36,7 +36,7 @@ async function getInitialData() {
   const files = storageData.map(file => {
     const metadata = metadataData?.find(m => m.file_name === file.name);
     return {
-      id: file.id,
+      id: metadata?.id,
       name: file.name,
       displayName: metadata?.display_name || file.name,
       created_at: file.created_at,

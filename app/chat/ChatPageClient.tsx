@@ -104,7 +104,8 @@ export default function ChatPageClient({ initialData }: ChatPageClientProps) {
           llm_choice: llmChoice,
           conversationId: currentConversationId,
           query: input, // for RAG query
-          match_count: 5 // for RAG query
+          match_count: 5, // for RAG query
+          user_id: initialData.user?.id
         }),
       });
 

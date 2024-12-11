@@ -4,15 +4,15 @@ const API_URL = process.env.API_URL || 'http://localhost:8000';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { query, llm_choice, match_count } = body;
+  const { query, llm_choice, match_count, user_id } = body;
 
   try {
-    const response = await fetch(`${API_URL}/rag-query`, {
+    const response = await fetch(`${API_URL}/rag-query-v2`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query, llm_choice, match_count }),
+      body: JSON.stringify({ query, llm_choice, match_count, user_id}),
     });
 
     if (!response.ok) {

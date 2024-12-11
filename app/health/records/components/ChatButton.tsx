@@ -6,8 +6,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ReactMarkdown from 'react-markdown';
+import useUser from '@/app/hook/useUser';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 
 interface Message {
   role: 'user' | 'assistant';
@@ -21,6 +23,9 @@ export function ChatButton() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { data: user, isLoading: userLoading } = useUser();
+  console.log(user)
+
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -36,6 +41,7 @@ export function ChatButton() {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+    
 
     try {
       const response = await fetch(`${API_URL}/rag-query`, {
@@ -44,7 +50,8 @@ export function ChatButton() {
         body: JSON.stringify({ 
           query: input,
           llm_choice: 'openai', 
-          match_count: 5
+          match_count: 5,
+          user_id: user?.id
         }),
       });
 
