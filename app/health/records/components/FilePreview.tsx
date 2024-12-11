@@ -60,7 +60,7 @@ export function FilePreview({ fileName, fileId, getFileUrl, transcriptionResult 
     // Subscribe to status updates
     const subscription = supabase
       .channel(`transcriptions`)
-      .on<TranscriptionPayload>(
+      .on(
         'postgres_changes',
         {
           event: '*',
@@ -68,7 +68,7 @@ export function FilePreview({ fileName, fileId, getFileUrl, transcriptionResult 
           table: 'transcriptions',
           filter: `file_id=eq.${fileId}`,
         },
-        (payload: TranscriptionPayload) => {
+        (payload: any) => {
           const newStatus = payload.new.status;
           setStatus(newStatus);
           
