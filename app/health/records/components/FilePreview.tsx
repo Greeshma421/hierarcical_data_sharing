@@ -7,6 +7,7 @@ import { Eye } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import Link from 'next/link';
 
 interface FilePreviewProps {
   fileName: string;
@@ -144,13 +145,15 @@ export function FilePreview({ fileName, fileId, getFileUrl, transcriptionResult 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex flex-col gap-2">
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
-            <Eye className="mr-2 h-4 w-4" />
-            Preview
-          </Button>
-          <div className="flex justify-center">
-            {getStatusBadge()}
+        <div className="relative flex items-center justify-between w-full p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
+          <div className="flex items-center gap-3">
+            <Eye className="h-4 w-4 text-muted-foreground" />
+            <span className="text-sm font-medium">{fileName}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link href={`/health/records/${fileId}`}>
+              {getStatusBadge()}
+            </Link>
           </div>
         </div>
       </DialogTrigger>

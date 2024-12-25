@@ -62,6 +62,11 @@ const healthItems = [
     href: "/health/reports",
     description: "View your health reports",
   },
+  {
+    title: "Generate Prescription",
+    href: "/health/documents",
+    description: "Generate prescriptions",
+  }
 
 ]
 

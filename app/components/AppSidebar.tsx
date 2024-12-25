@@ -87,7 +87,13 @@ const healthItems = [
     title: "Health Reports",
     href: "/health/reports",
     icon: FileText,
-  }
+  },
+  {
+    title: "Documents",
+    href: "/health/documents",
+    description: "Generate and manage medical documents",
+    icon: FileText,
+  },
 ]
 
 // const activityItems = [
