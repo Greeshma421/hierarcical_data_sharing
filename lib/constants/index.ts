@@ -1,2 +1,2 @@
-export const protectedPaths = [ "/chat", "/health-monitor", "/api", "/profile", "/health/nutrition", "/health-records", "/dashboard", "/chat-stream"];
+export const protectedPaths = [ "/chat", "/health-monitor", "/api", "/profile", "/health/nutrition", "/dashboard", "/chat-stream", "/health"];
 export const authPaths = ["/register", "/signin"];

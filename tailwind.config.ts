@@ -77,7 +77,9 @@ const config: Config = {
   			gradient: 'gradient 8s linear infinite',
   			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
   			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
-  			'background-position-spin': 'background-position-spin 3000ms infinite alternate'
+  			'background-position-spin': 'background-position-spin 3000ms infinite alternate',
+  			orbit: 'orbit calc(var(--duration)*1s) linear infinite',
+  			shine: 'shine var(--duration) infinite linear'
   		},
   		keyframes: {
   			grid: {
@@ -120,6 +122,25 @@ const config: Config = {
   				},
   				'100%': {
   					backgroundPosition: 'bottom center'
+  				}
+  			},
+  			orbit: {
+  				'0%': {
+  					transform: 'rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)'
+  				},
+  				'100%': {
+  					transform: 'rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)'
+  				}
+  			},
+  			shine: {
+  				'0%': {
+  					'background-position': '0% 0%'
+  				},
+  				'50%': {
+  					'background-position': '100% 100%'
+  				},
+  				to: {
+  					'background-position': '0% 0%'
   				}
   			}
   		}
