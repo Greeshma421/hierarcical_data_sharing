@@ -2,7 +2,9 @@
 
 This project is a  health data management and AI-assisted analysis platform. It combines personal health record management with advanced AI capabilities for data analysis and medical information retrieval.
 
-![HealthHub UI](https://github.com/CubeStar1/health-monitor-next/blob/main/public/health-monitor-landing.jpg)
+![HealthHub Landing Page](./public/landing/hm-landing-new.png)
+![HealthHub Assistant](./public/landing/hm-landing-health-assistant-3.png)
+
 
 ## Features
 
