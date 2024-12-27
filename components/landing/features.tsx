@@ -8,10 +8,10 @@ import Link from "next/link";
 import Image from "next/image";
 const features = [
   {
-    title: "AI Health Assistant",
-    description: "Get instant answers to your health questions with our advanced AI assistant",
+    title: "RAG Pipeline using Langchain",
+    description: "Our health assistant is powered by a RAG pipeline using Langchain to generate responses to your questions",
     image: "/landing/hm-chat-light.png",
-    url: "/chat"
+    url: "/rag"
   },
   {
     title: "Real-Time Health Monitoring",

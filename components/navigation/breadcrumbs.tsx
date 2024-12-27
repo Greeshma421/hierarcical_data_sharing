@@ -16,56 +16,48 @@ import { usePathname } from "next/navigation"
 const routes = {
   "/": {
     name: "Home",
-    path: "/home",
+    path: "/",
   },
-  "/visualizer": {
-    name: "Visualizer",
-    path: "/visualizer",
+  "/chat": {
+    name: "Chat",
+    path: "/chat",
   },
-  "/visualizer/stack": {
-    name: "Stack",
-    path: "/visualizer/stack",
+  "/dashboard": {
+    name: "Dashboard",
+    path: "/dashboard",
   },
-  "/visualizer/queue": {
-    name: "Queue",
-    path: "/visualizer/queue",
+  "/about": {
+    name: "About",
+    path: "/about",
   },
-  "/visualizer/stack-applications": {
-    name: "Infix to Postfix",
-    path: "/visualizer/stack-applications",
+  "/health": {
+    name: "Health",
+    path: "/health",
   },
-  "/visualizer/queue-applications": {
-    name: "Message Queue",
-    path: "/visualizer/queue-applications",
+  "/health/monitor": {
+    name: "Health Monitor",
+    path: "/health/monitor",
   },
-  "/visualizer/linked-list": {
-    name: "Linked List",
-    path: "/visualizer/linked-list",
+  "/health/nutrition": {
+    name: "Nutrition Log",
+    path: "/health/nutrition",
   },
-  "/visualizer/polynomial": {
-    name: "Polynomial Multiplication",
-    path: "/visualizer/polynomial",
+  "/health/records": {
+    name: "Health Records",
+    path: "/health/records",
   },
-  "/visualizer/binary-tree": {
-    name: "Binary Tree",
-    path: "/visualizer/binary-tree",
+  "/health/activities": {
+    name: "Activities",
+    path: "/health/activities",
   },
-  "/visualizer/avl-tree": {
-    name: "AVL Tree",
-    path: "/visualizer/avl-tree",
+  "/health/reports": {
+    name: "Health Reports",
+    path: "/health/reports",
   },
-  "/visualizer/heap": {
-    name: "Heap",
-    path: "/visualizer/heap",
-  },
-  "/visualizer/huffman": {
-    name: "Huffman Coding",
-    path: "/visualizer/huffman",
-  },
-  "/visualizer/dijkstra": {
-    name: "Dijkstra's Algorithm",
-    path: "/visualizer/dijkstra",
-  },
+  "/health/documents": {
+    name: "Generate Prescription",
+    path: "/health/documents",
+  }
 }
 
 export function Breadcrumbs({ 
@@ -117,7 +109,7 @@ export function Breadcrumbs({
   }
 
   return (
-    <header className="flex h-20 shrink-0 sticky top-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="flex h-20 z-50 shrink-0 sticky top-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex items-center gap-2 px-4 w-full">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 h-4" />

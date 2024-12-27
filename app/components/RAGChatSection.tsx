@@ -6,7 +6,6 @@ import { RainbowButton } from '@/components/ui/rainbow-button'
 import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 import { cn } from "@/lib/utils"
 import { BorderBeam } from '@/components/ui/border-beam'
-import { AnimatedBeamMultipleOutputDemo } from './AnimatedBeamDemo'
 import Spline from '@splinetool/react-spline/next';
 
 
@@ -41,7 +40,6 @@ export default function RAGChatSection() {
       </div>
       <div className="w-full md:w-1/2 order-1 md:order-2">
         <div className="relative rounded-lg overflow-hidden">
-          <AnimatedBeamMultipleOutputDemo className="w-full h-[400px]" />
           <BorderBeam size={150} duration={12} delay={9} borderWidth={2} />
         </div>
       </div>
