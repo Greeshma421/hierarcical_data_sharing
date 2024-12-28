@@ -12,9 +12,14 @@ import { Footer } from "@/components/landing/footer";
 import { Header } from "@/app/components/Header";
 import dynamic from 'next/dynamic';
 
-// Dynamically import HealthAssistant with SSR disabled
+// Dynamic imports for both components
 const DynamicHealthAssistant = dynamic(
   () => import('@/components/landing/health-assistant').then(mod => ({ default: mod.HealthAssistant })),
+  { ssr: false }
+);
+
+const DynamicDataSourcesVisual = dynamic(
+  () => import('@/components/landing/data-sources-visual').then(mod => ({ default: mod.DataSourcesVisual })),
   { ssr: false }
 );
 
@@ -25,11 +30,13 @@ export default function Home() {
       <div className="flex flex-col min-h-screen p-4 sm:p-10">
         <div className="flex flex-col gap-24 mb-24 z-10">
           <Hero />
-          {/* Only show on desktop */}
           <div className="hidden md:block">
             <DynamicHealthAssistant />
           </div>
           <Features />
+          <div className="hidden md:block">
+            <DynamicDataSourcesVisual />
+          </div>
           <RAGPipeline />
           <TechStack />
         </div>
