@@ -30,13 +30,13 @@ export default function Home() {
       <div className="flex flex-col min-h-screen p-4 sm:p-10">
         <div className="flex flex-col gap-24 mb-24 z-10">
           <Hero />
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <DynamicHealthAssistant />
-          </div>
+          </div> */}
           <Features />
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <DynamicDataSourcesVisual />
-          </div>
+          </div> */}
           <RAGPipeline />
           <TechStack />
         </div>
