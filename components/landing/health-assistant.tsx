@@ -6,6 +6,7 @@ import Spline from '@splinetool/react-spline/next';
 import { Application } from '@splinetool/runtime';
 import { Mic, Database, FileText, MessageSquare, Wand2, Activity, Brain, HeartPulse, Apple } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer, YAxis } from 'recharts';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const mockChat = [
   {
@@ -55,6 +56,8 @@ const predictionCards = [
 ];
 
 export const HealthAssistant = () => {
+  const isMobile = useIsMobile();
+  
   const handleSplineLoad = (spline: Application) => {
     spline.setZoom(1.2);
   };
@@ -77,17 +80,19 @@ export const HealthAssistant = () => {
 
         {/* Main Layout Container */}
         <div className="relative max-w-7xl mx-auto">
-          {/* Spline Scene Container - Positioned absolutely */}
-          <div className="absolute inset-0 h-[900px] w-full">
-            <Spline
-              scene="https://prod.spline.design/HHdKBycvfu77wPea/scene.splinecode"
-              className="w-full h-full"
-              onLoad={handleSplineLoad}
-            />
-          </div>
+          {/* Spline Scene Container - Only render on non-mobile */}
+          {!isMobile && (
+            <div className="absolute inset-0 h-[900px] w-full">
+              <Spline
+                scene="https://prod.spline.design/HHdKBycvfu77wPea/scene.splinecode"
+                className="w-full h-full"
+                onLoad={handleSplineLoad}
+              />
+            </div>
+          )}
 
-          {/* Content Grid - Overlays the Spline scene */}
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 pt-[100px]">
+          {/* Content Grid */}
+          <div className={`relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 ${!isMobile ? 'pt-[100px]' : ''}`}>
             {/* Left Column */}
             <div className="space-y-6 md:pr-8">
               {/* Real-time Health Monitoring */}

@@ -1,11 +1,14 @@
 "use client";
 
+import { useIsMobile } from '@/hooks/use-mobile';
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Database, FileText, Brain, Cpu } from "lucide-react";
 import OrbitingCircles from "@/components/ui/orbiting-circles";
 
 export const RAGPipeline = () => {
+  const isMobile = useIsMobile();
+
   return (
     <section className="w-full py-20 lg:py-40">
       <div className="container mx-auto">
@@ -75,52 +78,54 @@ export const RAGPipeline = () => {
               </motion.div>
             </div>
 
-            <motion.div
-              className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-[#9c40ff] to-[#ffaa40] bg-clip-text text-center text-8xl font-semibold leading-none text-transparent">
-                RAG
-              </span>
+            {!isMobile && (
+              <motion.div
+                className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-[#9c40ff] to-[#ffaa40] bg-clip-text text-center text-8xl font-semibold leading-none text-transparent">
+                  RAG
+                </span>
 
-              <OrbitingCircles
-                className="size-[30px] border-none bg-transparent"
-                duration={20}
-                delay={20}
-                radius={80}
-              >
-                <Database className="text-primary w-6 h-6" />
-              </OrbitingCircles>
-              <OrbitingCircles
-                className="size-[30px] border-none bg-transparent"
-                duration={20}
-                delay={10}
-                radius={80}
-              >
-                <FileText className="text-primary w-6 h-6" />
-              </OrbitingCircles>
+                <OrbitingCircles
+                  className="size-[30px] border-none bg-transparent"
+                  duration={20}
+                  delay={20}
+                  radius={80}
+                >
+                  <Database className="text-primary w-6 h-6" />
+                </OrbitingCircles>
+                <OrbitingCircles
+                  className="size-[30px] border-none bg-transparent"
+                  duration={20}
+                  delay={10}
+                  radius={80}
+                >
+                  <FileText className="text-primary w-6 h-6" />
+                </OrbitingCircles>
 
-              <OrbitingCircles
-                className="size-[50px] border-none bg-transparent"
-                radius={190}
-                duration={20}
-                reverse
-              >
-                <Brain className="text-primary w-8 h-8" />
-              </OrbitingCircles>
-              <OrbitingCircles
-                className="size-[50px] border-none bg-transparent"
-                radius={190}
-                duration={20}
-                delay={20}
-                reverse
-              >
-                <Cpu className="text-primary w-8 h-8" />
-              </OrbitingCircles>
-            </motion.div>
+                <OrbitingCircles
+                  className="size-[50px] border-none bg-transparent"
+                  radius={190}
+                  duration={20}
+                  reverse
+                >
+                  <Brain className="text-primary w-8 h-8" />
+                </OrbitingCircles>
+                <OrbitingCircles
+                  className="size-[50px] border-none bg-transparent"
+                  radius={190}
+                  duration={20}
+                  delay={20}
+                  reverse
+                >
+                  <Cpu className="text-primary w-8 h-8" />
+                </OrbitingCircles>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
