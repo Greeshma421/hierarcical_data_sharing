@@ -1,13 +1,21 @@
 "use client";
 
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Database, FileText, Brain, Cpu } from "lucide-react";
 import OrbitingCircles from "@/components/ui/orbiting-circles";
 
 export const RAGPipeline = () => {
-  const isMobile = useIsMobile();
+  const [shouldRenderAnimation, setShouldRenderAnimation] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldRenderAnimation(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section className="w-full py-20 lg:py-40">
@@ -78,7 +86,7 @@ export const RAGPipeline = () => {
               </motion.div>
             </div>
 
-            {!isMobile && (
+            {shouldRenderAnimation && (
               <motion.div
                 className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl"
                 initial={{ opacity: 0, scale: 0.8 }}
