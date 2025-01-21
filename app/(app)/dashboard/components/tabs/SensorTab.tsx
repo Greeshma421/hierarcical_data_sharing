@@ -33,7 +33,7 @@ export function SensorTab({ sensorData }: SensorTabProps) {
                 <TableHead>Timestamp</TableHead>
                 <TableHead>Heart Rate (bpm)</TableHead>
                 <TableHead>Temperature (°C)</TableHead>
-                <TableHead>IR Value</TableHead>
+                <TableHead>ECG Value</TableHead>
                 <TableHead>Humidity (%)</TableHead>
               </TableRow>
             </TableHeader>

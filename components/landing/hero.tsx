@@ -8,7 +8,7 @@ import Link from "next/link";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { motion } from "framer-motion";
 import ShineBorder from "@/components/ui/shine-border";
-
+import HeroVideoDialog from "@/components/ui/hero-video-dialog";
 export const Hero = () => {
   const { theme } = useTheme();
   return (
@@ -68,11 +68,18 @@ export const Hero = () => {
           <ShineBorder
             color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
           >
-            <img
+            {/* <img
               className="w-full md:w-[1200px] mx-auto rounded-lg relative leading-none flex items-center border border-t-2 border-secondary"
               src={"/health-monitor-chat.jpg"}
               alt="Health Dashboard"
-            />
+            /> */}
+            <HeroVideoDialog
+              className="dark:hidden block"
+              animationStyle="top-in-bottom-out"
+              videoSrc="https://www.youtube.com/embed/hRlfrEtWPrc?si=mmr_KejR77wJif8S"
+              thumbnailSrc="/health-monitor-chat.jpg"
+              thumbnailAlt="Hero Video"
+          />
           </ShineBorder>
 
           <div className="absolute bottom-0 left-0 w-full h-16 sm:h-20 md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg"></div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, Home, Send, User, FileText, Activity, Apple, LineChart, ClipboardList } from "lucide-react"
+import { Heart, Home, Send, User, FileText, Activity, Apple, LineChart, ClipboardList, Mic } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -56,6 +56,12 @@ const healthItems = [
     href: "/health/activities",
     icon: Activity,
     description: "View your Strava activities",
+  },
+  {
+    title: "Voice Assistant",
+    href: "/voice-assistant",
+    icon: Mic,
+    description: "Select your voice assistant",
   },
 ]
 

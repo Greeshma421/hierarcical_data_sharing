@@ -110,7 +110,7 @@ export default function HealthMonitor() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <HealthChart data={healthData} dataKey="beat_avg" title="Heart Rate" unit="bpm" chartType={chartType} />
                 <HealthChart data={healthData} dataKey="temperature_c" title="Temperature" unit="°C" chartType={chartType} />
-                <HealthChart data={healthData} dataKey="ir_value" title="IR Value" unit="" chartType={chartType} />
+                <HealthChart data={healthData} dataKey="ir_value" title="ECG Value" unit="" chartType={chartType} />
                 <HealthChart data={healthData} dataKey="humidity" title="Humidity" unit="%" chartType={chartType} />
               </div>
               <Card>

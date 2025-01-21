@@ -7,6 +7,7 @@ import Spline from '@splinetool/react-spline/next';
 import { Application } from '@splinetool/runtime';
 import { Mic, Database, FileText, MessageSquare, Wand2, Activity, Brain, HeartPulse, Apple } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer, YAxis } from 'recharts';
+import { useTheme } from "next-themes";
 
 const mockChat = [
   {
@@ -57,6 +58,7 @@ const predictionCards = [
 
 export const HealthAssistant = () => {
   const [shouldRenderSpline, setShouldRenderSpline] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -88,21 +90,10 @@ export const HealthAssistant = () => {
 
         {/* Main Layout Container */}
         <div className="relative max-w-7xl mx-auto">
-          {/* Spline Scene Container */}
-          <div className="absolute inset-0 h-[900px] w-full">
-            {shouldRenderSpline && (
-              <Spline
-                scene="https://prod.spline.design/HHdKBycvfu77wPea/scene.splinecode"
-                className="w-full h-full"
-                onLoad={handleSplineLoad}
-              />
-            )}
-          </div>
-
-          {/* Content Grid - Overlays the Spline scene */}
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 pt-[100px]">
+          {/* Content Grid */}
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 pt-[100px]">
             {/* Left Column */}
-            <div className="space-y-6 md:pr-8">
+            <div className="space-y-6 md:pr-8 relative z-20">
               {/* Real-time Health Monitoring */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -271,10 +262,10 @@ export const HealthAssistant = () => {
             </div>
 
             {/* Center Column - Empty space for robot visibility */}
-            <div className="hidden md:block" />
+            <div className="hidden md:block relative z-10" />
 
             {/* Right Column */}
-            <div className="space-y-6 md:pl-8">
+            <div className="space-y-6 md:pl-8 relative z-20">
               {/* Chat Interface */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -344,6 +335,20 @@ export const HealthAssistant = () => {
                 </div>
               </motion.div>
             </div>
+          </div>
+
+          {/* Spline Scene Container - Move it after the content */}
+          <div className="absolute inset-0 h-[900px] w-full z-10 pointer-events-none">
+            {shouldRenderSpline && (
+              <Spline
+                scene={theme === 'light' 
+                  ? "https://prod.spline.design/HTYCUpT6dJ4ebiXf/scene.splinecode"
+                  : "https://prod.spline.design/HHdKBycvfu77wPea/scene.splinecode"
+                }
+                className="w-full h-full pointer-events-auto"
+                onLoad={handleSplineLoad}
+              />
+            )}
           </div>
         </div>
       </div>

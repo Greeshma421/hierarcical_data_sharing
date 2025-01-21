@@ -6,6 +6,8 @@ import { memo } from 'react';
 import { Markdown } from './markdown';
 import { SparklesIcon } from './icons';
 import { cn } from '@/lib/utils';
+import { MarkdownContent } from "@/components/ui/markdown-content"
+
 
 const PurePreviewMessage = ({
   message,
@@ -45,14 +47,14 @@ const PurePreviewMessage = ({
             </div>
           )}
 
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-2 w-full overflow-x-auto">
             {message.content && (
               <div className="flex flex-row gap-2 items-start">
                 <div className={cn('flex flex-col gap-4', {
                   'bg-primary text-primary-foreground px-3 py-2 rounded-xl':
                     message.role === 'user',
                 })}>
-                  <Markdown>{message.content as string}</Markdown>
+                  <MarkdownContent content={message.content as string} id={message.id}/>
                 </div>
               </div>
             )}
