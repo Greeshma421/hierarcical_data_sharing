@@ -11,6 +11,8 @@ import ShineBorder from "@/components/ui/shine-border";
 import HeroVideoDialog from "@/components/ui/hero-video-dialog";
 export const Hero = () => {
   const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const imageSrc = isDark ? "/landing/hm-chat-dark-new.jpg" : "/landing/hm-chat-light-new.jpg";
   return (
     <motion.section 
       className="w-full"
@@ -74,10 +76,10 @@ export const Hero = () => {
               alt="Health Dashboard"
             /> */}
             <HeroVideoDialog
-              className="dark:hidden block"
+              className=""
               animationStyle="top-in-bottom-out"
               videoSrc="https://www.youtube.com/embed/hRlfrEtWPrc?si=mmr_KejR77wJif8S"
-              thumbnailSrc="/health-monitor-chat.jpg"
+              thumbnailSrc={imageSrc}
               thumbnailAlt="Hero Video"
           />
           </ShineBorder>

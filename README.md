@@ -1,50 +1,78 @@
 # HealthHub: Health Data Management and AI-Assisted Analysis Platform
 
-This project is a  health data management and AI-assisted analysis platform. It combines personal health record management with advanced AI capabilities for data analysis and medical information retrieval.
+This project is a comprehensive health data management and AI-assisted analysis platform. It combines personal health record management with advanced AI capabilities for data analysis and medical information retrieval.
+
+## Platform Overview
 
 ![HealthHub Landing Page](./public/landing/hm-landing-new.png)
 ![HealthHub Assistant](./public/landing/hm-landing-health-assistant-3.png)
 
+### AI-Powered Health Assistant
+![Health Assistant Interface](./public/hm-chat-landing.png)
+Health assistant powered by a RAG pipeline using Langchain.
+
+![Video Assistant](./public/hm-video-landing.png)
+Video assistant powered by HeyGen.
+
+### Real-Time Health Dashboard
+![Health Dashboard](./public/landing/hm-dashboard.png)
+Overview of your health metrics, vitals, and analytics in one unified interface.
+
+### Medical Records & Analysis
+![Medical Records](./public/landing/hm-record-analysis.png)
+![Records Transcription](./public/landing/hm-record-transcript.png)
+Secure storage and vectorization of your medical records with automatic transcription.
+
+### Health Monitoring & Activities
+![Real-time Monitoring](./public/landing/hm-graphs.png)
+![Activity Tracking](./public/landing/hm-activities.png)
+Track vital signs in real-time and monitor your daily activities and fitness progress.
+
+### Nutrition & Health Reports
+![Nutrition Tracking](./public/landing/hm-nutrition.png)
+![Health Reports](./public/landing/hm-report.png)
+Monitor your nutrition and generate comprehensive health reports for healthcare providers.
 
 ## Features
 
-### Real time sensor data integration
-- Integration of Arduino sensors for real-time data collection
-- Display of sensor data on the dashboard using ESP8266 syncing data to Supabase
+### Real-time Health Data Integration
+- Integration of Arduino sensors for vital signs monitoring
+- Live dashboard updates via ESP8266 and Supabase
+- Structured data collection and analysis for health trends
 
-### Health Records Management
+### Comprehensive Health Records Management
 - Secure upload and storage of personal health records
-- File preview and download functionality
-- Rename and delete options for uploaded files
-- Organized display of health records with a user-friendly interface
-- Automatic transcription of uploaded medical records (PDF and images)
+- Automatic transcription of medical records (PDF and images)
 - Creation of embeddings from transcribed text using Cohere
-- Storage of embeddings in Supabase's vector database for efficient retrieval
+- Intelligent file organization with preview and download options
 
-### AI-Powered Chat Interface
-- Conversational AI interface for querying personal health data
-- Support for multiple language models (LLMs) including OpenAI's GPT models
-- Conversation history management with options to create, rename, and delete conversations
+### Advanced AI Assistant Capabilities
+- Multi-modal interaction with voice and text interfaces
+- Gemini 2.0 powered voice recognition and response
+- HeyGen AI video assistant for personalized health guidance
+- Support for multiple language models (OpenAI GPT-4, Gemini)
+- Conversation history management and context retention
 
 ### RAG (Retrieval-Augmented Generation) Pipeline
+- Combines structured sensor data and unstructured medical records
 - Utilizes Langchain for efficient document processing and retrieval
-- Implements Cohere embeddings for semantic understanding of health data
-- Enhances AI responses with relevant information from personal health records
-- Improves accuracy and relevance of AI-generated answers
+- Implements Cohere embeddings for semantic understanding
+- Enhances AI responses with personalized health context
+- Real-time integration of sensor data in responses
 
-### Perplexity-like Medical Web Search
-- Integrated medical search functionality powered by the Tavily API
-- Provides up-to-date medical information from reputable online sources
-- Displays search results with source attribution and relevance ranking
-- Generates comprehensive reports based on search results using OpenAI's GPT-4o
+### Medical Knowledge Integration
+- Perplexity-style medical search using Tavily API
+- Up-to-date medical information from verified sources
+- Source attribution and relevance ranking
+- AI-generated comprehensive health reports
 
 
-## Techn Stack
+## Tech Stack
 
 - Frontend: Next.js with TypeScript
 - Backend: FastAPI (Python)
 - Database: Supabase (PostgreSQL with pgvector extension)
-- AI/ML: Langchain, OpenAI GPT models, Cohere embeddings
+- AI/ML: Langchain, OpenAI API, Cohere embeddings
 - External APIs: Tavily for medical web search
 
 ## Getting Started
