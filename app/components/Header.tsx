@@ -30,9 +30,10 @@ const components = [
     href: "/dashboard",
   },
   {
-    title: "About",
-    href: "/about",
-  }
+    title: "Pricing",
+    href: "/pricing",
+  },
+
 ]
 
 const healthItems = [
@@ -77,7 +78,7 @@ export function Header() {
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/idea-lab-round.png" alt="Health Monitor" width={32} height={32} />
-            <span className="text-xl font-bold">Health Monitor</span>
+            <span className="text-xl font-bold">HealthHub</span>
           </Link>
         </div>
         <div className="hidden md:block">

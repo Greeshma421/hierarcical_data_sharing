@@ -39,7 +39,7 @@ export const Footer = () => {
             transition={{ duration: 0.5 }}
             className="space-y-4 max-w-xs"
           >
-            <h3 className="text-lg font-semibold">HealthMonitor</h3>
+            <h3 className="text-lg font-semibold">HealthHub</h3>
             <p className="text-sm text-muted-foreground">
               Advanced health monitoring and analysis platform powered by AI and real-time sensor data.
             </p>
@@ -101,7 +101,7 @@ export const Footer = () => {
             </Link>
           </p>
           <p className="mt-2">
-            © {new Date().getFullYear()} HealthMonitor. All rights reserved.
+            © {new Date().getFullYear()} HealthHub. All rights reserved.
           </p>
         </motion.div>
       </div>
