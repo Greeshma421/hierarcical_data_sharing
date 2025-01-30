@@ -1,6 +1,6 @@
 # HealthHub: Health Data Management and AI-Assisted Analysis Platform
 
-This project is a comprehensive health data management and AI-assisted analysis platform. It combines personal health record management with advanced AI capabilities for data analysis and medical information retrieval.
+This project is a health data management and AI-assisted analysis platform. It combines personal health record management with advanced AI capabilities for data analysis and medical information retrieval using RAG.
 
 ## Platform Overview
 
@@ -35,37 +35,19 @@ Monitor your nutrition and generate comprehensive health reports for healthcare 
 
 ## Features
 
-### Real-time Health Data Integration
-- Integration of Arduino sensors for vital signs monitoring
-- Live dashboard updates via ESP8266 and Supabase
-- Structured data collection and analysis for health trends
+### Real-time Health Data Integration & Monitoring
+- Integration with Arduino sensors for vital signs monitoring and live dashboard updates
+- Structured data collection and analysis for health trends via ESP8266 and Supabase
 
-### Comprehensive Health Records Management
-- Secure upload and storage of personal health records
-- Automatic transcription of medical records (PDF and images)
-- Creation of embeddings from transcribed text using Cohere
-- Intelligent file organization with preview and download options
+### AI-Powered Health Assistant
+- Multi-modal interaction with voice, text, and video interfaces using Gemini 2.0 and HeyGen AI
+- RAG pipeline powered by Langchain for personalized health insights
+- Medical knowledge search and verification using Tavily API
 
-### Advanced AI Assistant Capabilities
-- Multi-modal interaction with voice and text interfaces
-- Gemini 2.0 powered voice recognition and response
-- HeyGen AI video assistant for personalized health guidance
-- Support for multiple language models (OpenAI GPT-4, Gemini)
-- Conversation history management and context retention
-
-### RAG (Retrieval-Augmented Generation) Pipeline
-- Combines structured sensor data and unstructured medical records
-- Utilizes Langchain for efficient document processing and retrieval
-- Implements Cohere embeddings for semantic understanding
-- Enhances AI responses with personalized health context
-- Real-time integration of sensor data in responses
-
-### Medical Knowledge Integration
-- Perplexity-style medical search using Tavily API
-- Up-to-date medical information from verified sources
-- Source attribution and relevance ranking
-- AI-generated comprehensive health reports
-
+### Health Records Management
+- Secure storage and automatic transcription of medical records
+- Document vectorization with Cohere embeddings for semantic search
+- Health reports generation combining structured sensor data and unstructured medical records
 
 ## Tech Stack
 
@@ -144,8 +126,9 @@ Monitor your nutrition and generate comprehensive health reports for healthcare 
    NEXT_PUBLIC_DB_HOST=<your_db_host>
    NEXT_PUBLIC_DB_PORT=<your_db_port>
    NEXT_PUBLIC_DB_NAME=<your_db_name>
+   ```
 
-
+   ```bash
    # Backend .env (in health-monitor-api directory)
    OPENAI_API_KEY=<your_openai_api_key>
    LOCAL_LLM_URL=<your_local_llm_url>
@@ -170,11 +153,6 @@ Monitor your nutrition and generate comprehensive health reports for healthcare 
    uvicorn main:app --reload
    ```
 
-## Usage
-
-1. Upload health records through the Health Records interface
-2. Use the Chat interface to query your health data or ask medical questions
-3. Utilize the Medical Search feature for up-to-date medical information
 
 ## Medical Records Processing
 
@@ -185,5 +163,5 @@ When a medical record is uploaded:
 3. The extracted text is then sent to Cohere to generate embeddings.
 4. The embeddings, along with the original text and metadata, are stored in the Supabase vector database.
 
-This process allows for efficient semantic search and retrieval of relevant information during chat interactions.
+This process allows for efficient semantic search and retrieval of relevant information during chat interactions
 

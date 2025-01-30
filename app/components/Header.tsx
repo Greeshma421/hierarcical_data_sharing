@@ -30,8 +30,8 @@ const components = [
     href: "/dashboard",
   },
   {
-    title: "Pricing",
-    href: "/pricing",
+    title: "About",
+    href: "/about",
   },
 
 ]
